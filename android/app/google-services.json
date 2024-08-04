@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1031288970059",
+    "project_id": "sales-3t1asd",
+    "storage_bucket": "sales-3t1asd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1031288970059:android:01ab86cd3e1eefc8b066ce",
+        "android_client_info": {
+          "package_name": "gafar.code.distributorapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUeTDkwpWX1aTLzazURNIaNgpKOm4k6Mg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
