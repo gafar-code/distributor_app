@@ -32,9 +32,7 @@ class _HomeSalesWidgetState extends State<HomeSalesWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -42,7 +40,7 @@ class _HomeSalesWidgetState extends State<HomeSalesWidget> {
           backgroundColor: FlutterFlowTheme.of(context).primary,
           automaticallyImplyLeading: false,
           title: Text(
-            'Sales',
+            'Dasboard Sales',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
                   fontFamily: 'Outfit',
                   color: Colors.white,
@@ -117,10 +115,10 @@ class _HomeSalesWidgetState extends State<HomeSalesWidget> {
                               FlutterFlowTheme.of(context).secondaryText,
                         ),
                         child: CheckboxListTile(
-                          value: _model.checkboxListTileValue1 ??= true,
+                          value: _model.checkboxListTileValue ??= true,
                           onChanged: (newValue) async {
-                            setState(() =>
-                                _model.checkboxListTileValue1 = newValue!);
+                            setState(
+                                () => _model.checkboxListTileValue = newValue!);
                             if (newValue!) {
                               context.pushNamed('DetailTaskSales');
                             }
@@ -136,190 +134,6 @@ class _HomeSalesWidgetState extends State<HomeSalesWidget> {
                           ),
                           subtitle: Text(
                             'gafar riskiyanto',
-                            style: FlutterFlowTheme.of(context)
-                                .labelMedium
-                                .override(
-                                  fontFamily: 'Readex Pro',
-                                  letterSpacing: 0.0,
-                                ),
-                          ),
-                          tileColor:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          activeColor: FlutterFlowTheme.of(context).primary,
-                          checkColor: FlutterFlowTheme.of(context).info,
-                          dense: false,
-                          controlAffinity: ListTileControlAffinity.trailing,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 0.0),
-                      child: Theme(
-                        data: ThemeData(
-                          checkboxTheme: const CheckboxThemeData(
-                            visualDensity: VisualDensity.compact,
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
-                          ),
-                          unselectedWidgetColor:
-                              FlutterFlowTheme.of(context).secondaryText,
-                        ),
-                        child: CheckboxListTile(
-                          value: _model.checkboxListTileValue2 ??= true,
-                          onChanged: (newValue) async {
-                            setState(() =>
-                                _model.checkboxListTileValue2 = newValue!);
-                          },
-                          title: Text(
-                            'Title',
-                            style: FlutterFlowTheme.of(context)
-                                .titleLarge
-                                .override(
-                                  fontFamily: 'Outfit',
-                                  letterSpacing: 0.0,
-                                ),
-                          ),
-                          subtitle: Text(
-                            'Subtitle goes here...',
-                            style: FlutterFlowTheme.of(context)
-                                .labelMedium
-                                .override(
-                                  fontFamily: 'Readex Pro',
-                                  letterSpacing: 0.0,
-                                ),
-                          ),
-                          tileColor:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          activeColor: FlutterFlowTheme.of(context).primary,
-                          checkColor: FlutterFlowTheme.of(context).info,
-                          dense: false,
-                          controlAffinity: ListTileControlAffinity.trailing,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 0.0),
-                      child: Theme(
-                        data: ThemeData(
-                          checkboxTheme: const CheckboxThemeData(
-                            visualDensity: VisualDensity.compact,
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
-                          ),
-                          unselectedWidgetColor:
-                              FlutterFlowTheme.of(context).secondaryText,
-                        ),
-                        child: CheckboxListTile(
-                          value: _model.checkboxListTileValue3 ??= true,
-                          onChanged: (newValue) async {
-                            setState(() =>
-                                _model.checkboxListTileValue3 = newValue!);
-                          },
-                          title: Text(
-                            'Title',
-                            style: FlutterFlowTheme.of(context)
-                                .titleLarge
-                                .override(
-                                  fontFamily: 'Outfit',
-                                  letterSpacing: 0.0,
-                                ),
-                          ),
-                          subtitle: Text(
-                            'Subtitle goes here...',
-                            style: FlutterFlowTheme.of(context)
-                                .labelMedium
-                                .override(
-                                  fontFamily: 'Readex Pro',
-                                  letterSpacing: 0.0,
-                                ),
-                          ),
-                          tileColor:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          activeColor: FlutterFlowTheme.of(context).primary,
-                          checkColor: FlutterFlowTheme.of(context).info,
-                          dense: false,
-                          controlAffinity: ListTileControlAffinity.trailing,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 0.0),
-                      child: Theme(
-                        data: ThemeData(
-                          checkboxTheme: const CheckboxThemeData(
-                            visualDensity: VisualDensity.compact,
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
-                          ),
-                          unselectedWidgetColor:
-                              FlutterFlowTheme.of(context).secondaryText,
-                        ),
-                        child: CheckboxListTile(
-                          value: _model.checkboxListTileValue4 ??= true,
-                          onChanged: (newValue) async {
-                            setState(() =>
-                                _model.checkboxListTileValue4 = newValue!);
-                          },
-                          title: Text(
-                            'Title',
-                            style: FlutterFlowTheme.of(context)
-                                .titleLarge
-                                .override(
-                                  fontFamily: 'Outfit',
-                                  letterSpacing: 0.0,
-                                ),
-                          ),
-                          subtitle: Text(
-                            'Subtitle goes here...',
-                            style: FlutterFlowTheme.of(context)
-                                .labelMedium
-                                .override(
-                                  fontFamily: 'Readex Pro',
-                                  letterSpacing: 0.0,
-                                ),
-                          ),
-                          tileColor:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          activeColor: FlutterFlowTheme.of(context).primary,
-                          checkColor: FlutterFlowTheme.of(context).info,
-                          dense: false,
-                          controlAffinity: ListTileControlAffinity.trailing,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 0.0),
-                      child: Theme(
-                        data: ThemeData(
-                          checkboxTheme: const CheckboxThemeData(
-                            visualDensity: VisualDensity.compact,
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
-                          ),
-                          unselectedWidgetColor:
-                              FlutterFlowTheme.of(context).secondaryText,
-                        ),
-                        child: CheckboxListTile(
-                          value: _model.checkboxListTileValue5 ??= true,
-                          onChanged: (newValue) async {
-                            setState(() =>
-                                _model.checkboxListTileValue5 = newValue!);
-                          },
-                          title: Text(
-                            'Title',
-                            style: FlutterFlowTheme.of(context)
-                                .titleLarge
-                                .override(
-                                  fontFamily: 'Outfit',
-                                  letterSpacing: 0.0,
-                                ),
-                          ),
-                          subtitle: Text(
-                            'Subtitle goes here...',
                             style: FlutterFlowTheme.of(context)
                                 .labelMedium
                                 .override(
@@ -391,37 +205,28 @@ class _HomeSalesWidgetState extends State<HomeSalesWidget> {
               ),
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 0.0),
-                child: InkWell(
-                  splashColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onTap: () async {
-                    context.pushNamed('LoginPage');
-                  },
-                  child: ListTile(
-                    title: Text(
-                      'Keluar',
-                      style: FlutterFlowTheme.of(context).titleLarge.override(
-                            fontFamily: 'Outfit',
-                            letterSpacing: 0.0,
-                          ),
-                    ),
-                    subtitle: Text(
-                      'keluar akun',
-                      style: FlutterFlowTheme.of(context).labelMedium.override(
-                            fontFamily: 'Readex Pro',
-                            letterSpacing: 0.0,
-                          ),
-                    ),
-                    trailing: Icon(
-                      Icons.exit_to_app,
-                      color: FlutterFlowTheme.of(context).secondaryText,
-                      size: 20.0,
-                    ),
-                    tileColor: FlutterFlowTheme.of(context).secondaryBackground,
-                    dense: false,
+                child: ListTile(
+                  title: Text(
+                    'Keluar',
+                    style: FlutterFlowTheme.of(context).titleLarge.override(
+                          fontFamily: 'Outfit',
+                          letterSpacing: 0.0,
+                        ),
                   ),
+                  subtitle: Text(
+                    'keluar akun',
+                    style: FlutterFlowTheme.of(context).labelMedium.override(
+                          fontFamily: 'Readex Pro',
+                          letterSpacing: 0.0,
+                        ),
+                  ),
+                  trailing: Icon(
+                    Icons.exit_to_app,
+                    color: FlutterFlowTheme.of(context).secondaryText,
+                    size: 20.0,
+                  ),
+                  tileColor: FlutterFlowTheme.of(context).secondaryBackground,
+                  dense: false,
                 ),
               ),
             ],

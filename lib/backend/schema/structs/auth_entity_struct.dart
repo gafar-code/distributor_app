@@ -4,8 +4,8 @@
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
-class DataStruct extends BaseStruct {
-  DataStruct({
+class AuthEntityStruct extends BaseStruct {
+  AuthEntityStruct({
     String? token,
     UserStruct? user,
   })  : _token = token,
@@ -29,13 +29,15 @@ class DataStruct extends BaseStruct {
 
   bool hasUser() => _user != null;
 
-  static DataStruct fromMap(Map<String, dynamic> data) => DataStruct(
+  static AuthEntityStruct fromMap(Map<String, dynamic> data) =>
+      AuthEntityStruct(
         token: data['token'] as String?,
         user: UserStruct.maybeFromMap(data['user']),
       );
 
-  static DataStruct? maybeFromMap(dynamic data) =>
-      data is Map ? DataStruct.fromMap(data.cast<String, dynamic>()) : null;
+  static AuthEntityStruct? maybeFromMap(dynamic data) => data is Map
+      ? AuthEntityStruct.fromMap(data.cast<String, dynamic>())
+      : null;
 
   Map<String, dynamic> toMap() => {
         'token': _token,
@@ -54,8 +56,8 @@ class DataStruct extends BaseStruct {
         ),
       }.withoutNulls;
 
-  static DataStruct fromSerializableMap(Map<String, dynamic> data) =>
-      DataStruct(
+  static AuthEntityStruct fromSerializableMap(Map<String, dynamic> data) =>
+      AuthEntityStruct(
         token: deserializeParam(
           data['token'],
           ParamType.String,
@@ -70,22 +72,24 @@ class DataStruct extends BaseStruct {
       );
 
   @override
-  String toString() => 'DataStruct(${toMap()})';
+  String toString() => 'AuthEntityStruct(${toMap()})';
 
   @override
   bool operator ==(Object other) {
-    return other is DataStruct && token == other.token && user == other.user;
+    return other is AuthEntityStruct &&
+        token == other.token &&
+        user == other.user;
   }
 
   @override
   int get hashCode => const ListEquality().hash([token, user]);
 }
 
-DataStruct createDataStruct({
+AuthEntityStruct createAuthEntityStruct({
   String? token,
   UserStruct? user,
 }) =>
-    DataStruct(
+    AuthEntityStruct(
       token: token,
       user: user ?? UserStruct(),
     );

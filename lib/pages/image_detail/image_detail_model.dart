@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 class ImageDetailModel extends FlutterFlowModel<ImageDetailWidget> {
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // State field(s) for Carousel widget.
   CarouselController? carouselController;
   int carouselCurrentIndex = 1;
@@ -15,7 +14,5 @@ class ImageDetailModel extends FlutterFlowModel<ImageDetailWidget> {
   void initState(BuildContext context) {}
 
   @override
-  void dispose() {
-    unfocusNode.dispose();
-  }
+  void dispose() {}
 }

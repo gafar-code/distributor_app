@@ -1,10 +1,7 @@
-import '/backend/api_requests/api_calls.dart';
-import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'login_page_model.dart';
 export 'login_page_model.dart';
 
@@ -41,12 +38,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -214,76 +207,21 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                 alignment: const AlignmentDirectional(1.0, 0.0),
                 child: Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 12.0, 0.0),
-                  child: InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () async {
-                      context.pushNamed('ForgotPassword');
-                    },
-                    child: Text(
-                      'Lupa sandi?',
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily: 'Readex Pro',
-                            color: FlutterFlowTheme.of(context).secondary,
-                            letterSpacing: 0.0,
-                          ),
-                    ),
+                  child: Text(
+                    'Lupa sandi?',
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                          fontFamily: 'Readex Pro',
+                          color: FlutterFlowTheme.of(context).secondary,
+                          letterSpacing: 0.0,
+                        ),
                   ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(12.0, 24.0, 12.0, 0.0),
                 child: FFButtonWidget(
-                  onPressed: () async {
-                    if (_model.formKey.currentState == null ||
-                        !_model.formKey.currentState!.validate()) {
-                      return;
-                    }
-                    _model.loginRes = await DistributorAPPGroup.loginCall.call(
-                      email: _model.textController1.text,
-                      password: _model.textController2.text,
-                    );
-
-                    if (LoginResponseStruct.maybeFromMap(
-                            (_model.loginRes?.jsonBody ?? ''))!
-                        .hasData()) {
-                      FFAppState().token = LoginResponseStruct.maybeFromMap(
-                              (_model.loginRes?.jsonBody ?? ''))!
-                          .data
-                          .token;
-                      FFAppState().user = LoginResponseStruct.maybeFromMap(
-                              (_model.loginRes?.jsonBody ?? ''))!
-                          .data
-                          .user;
-                      setState(() {});
-                      if (FFAppState().user.role == FFAppConstants.RoleSales) {
-                        context.goNamed('HomeSales');
-                      } else {
-                        if (Navigator.of(context).canPop()) {
-                          context.pop();
-                        }
-                        context.pushNamed('HomeAdmin');
-                      }
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            LoginResponseStruct.maybeFromMap(
-                                    (_model.loginRes?.jsonBody ?? ''))!
-                                .message,
-                            style: TextStyle(
-                              color: FlutterFlowTheme.of(context).primaryText,
-                            ),
-                          ),
-                          duration: const Duration(milliseconds: 4000),
-                          backgroundColor: FlutterFlowTheme.of(context).warning,
-                        ),
-                      );
-                    }
-
-                    setState(() {});
+                  onPressed: () {
+                    print('Button pressed ...');
                   },
                   text: 'Masuk',
                   options: FFButtonOptions(
@@ -326,23 +264,13 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                   ),
                         ),
                       ),
-                      InkWell(
-                        splashColor: Colors.transparent,
-                        focusColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onTap: () async {
-                          context.pushNamed('Registration');
-                        },
-                        child: Text(
-                          'Daftar',
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Readex Pro',
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                        ),
+                      Text(
+                        'Daftar',
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Readex Pro',
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                     ],
                   ),

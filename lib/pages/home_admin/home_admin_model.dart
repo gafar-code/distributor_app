@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 class HomeAdminModel extends FlutterFlowModel<HomeAdminWidget> {
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // State field(s) for CheckboxListTile widget.
   bool? checkboxListTileValue1;
   // State field(s) for CheckboxListTile widget.
@@ -21,7 +20,5 @@ class HomeAdminModel extends FlutterFlowModel<HomeAdminWidget> {
   void initState(BuildContext context) {}
 
   @override
-  void dispose() {
-    unfocusNode.dispose();
-  }
+  void dispose() {}
 }

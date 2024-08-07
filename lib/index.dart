@@ -14,3 +14,4 @@ export '/pages/add_task/add_task_widget.dart' show AddTaskWidget;
 export '/pages/detail_task_admin/detail_task_admin_widget.dart'
     show DetailTaskAdminWidget;
 export '/pages/edit_task/edit_task_widget.dart' show EditTaskWidget;
+export '/pages/splash/splash_widget.dart' show SplashWidget;

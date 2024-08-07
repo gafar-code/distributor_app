@@ -74,13 +74,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? const HomeSalesWidget() : const LoginPageWidget(),
+          appStateNotifier.loggedIn ? const HomeSalesWidget() : const SplashWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? const HomeSalesWidget() : const LoginPageWidget(),
+              appStateNotifier.loggedIn ? const HomeSalesWidget() : const SplashWidget(),
         ),
         FFRoute(
           name: 'LoginPage',
@@ -141,6 +141,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'EditTask',
           path: '/editTask',
           builder: (context, params) => const EditTaskWidget(),
+        ),
+        FFRoute(
+          name: 'Splash',
+          path: '/splash',
+          builder: (context, params) => const SplashWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -311,7 +316,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
-            return '/loginPage';
+            return '/splash';
           }
           return null;
         },

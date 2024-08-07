@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
+import '/flutter_flow/flutter_flow_util.dart';
 import 'api_manager.dart';
 
 export 'api_manager.dart' show ApiCallResponse;
@@ -90,15 +91,20 @@ class ForgotCall {
 }
 
 class RegisterCall {
-  Future<ApiCallResponse> call() async {
+  Future<ApiCallResponse> call({
+    String? role = 'SALES',
+    String? name = 'name',
+    String? email = 'name@gmail.com',
+    String? password = 'name',
+  }) async {
     final baseUrl = DistributorAPPGroup.getBaseUrl();
 
-    const ffApiRequestBody = '''
+    final ffApiRequestBody = '''
 {
-  "role": "ADMIN",
-  "name": "John Doe",
-  "email": "4I9o6@example.com",
-  "password": "password"
+  "role": "$role",
+  "name": "$name",
+  "email": "$email",
+  "password": "$password"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Register',
@@ -116,12 +122,49 @@ class RegisterCall {
       alwaysAllowBody: false,
     );
   }
+
+  int? code(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+  String? token(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.data.token''',
+      ));
+  String? createdAt(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.data.user.created_at''',
+      ));
+  String? updatedAt(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.data.user.updated_at''',
+      ));
+  String? role(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.data.user.role''',
+      ));
+  String? name(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.data.user.name''',
+      ));
+  int? id(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.data.user.id''',
+      ));
+  String? email(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.data.user.email''',
+      ));
 }
 
 class LoginCall {
   Future<ApiCallResponse> call({
-    String? email = '',
-    String? password = '',
+    String? email = 'b@c.com',
+    String? password = '1234',
   }) async {
     final baseUrl = DistributorAPPGroup.getBaseUrl();
 
@@ -146,12 +189,50 @@ class LoginCall {
       alwaysAllowBody: false,
     );
   }
+
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+  int? code(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? token(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.data.token''',
+      ));
+  String? createdAt(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.data.user.created_at''',
+      ));
+  String? email(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.data.user.email''',
+      ));
+  int? id(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.data.user.id''',
+      ));
+  String? name(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.data.user.name''',
+      ));
+  String? role(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.data.user.role''',
+      ));
+  String? updatedAt(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.data.user.updated_at''',
+      ));
 }
 
 class ListTaskCall {
   Future<ApiCallResponse> call({
     int? paginationId,
-    String? bearerAuth = '',
+    String? bearerAuth =
+        'v2.local.pLqlVVbm0qSobgpAgxmOiISixQjslyH3GjQ7dxEU35fB6SsHm0kkfYYDUe6-50Ku_Uf3bbRS0VlYNoE1eZoxn8N_GrEgxJLdLI-aaSgvJ242kGIq6sl41jdwF7-7fiv1EhhfMILa5MNUrWILGCnyiEhR7Yc7bqQDOD5xbwD8KWP9dPEhTLL9XM3pg5ySRgNEDNXvYqsa3coxjnDxq4oghgENwRNl3KDj4dh_Wh3c5pzjWZBhUURTXxxVGlAf7ch5x-j1TDc5Nne6mX6uWqw-Azk9heKdKewENik5QLtlsuo.bnVsbA',
   }) async {
     final baseUrl = DistributorAPPGroup.getBaseUrl();
 
@@ -173,6 +254,64 @@ class ListTaskCall {
       alwaysAllowBody: false,
     );
   }
+
+  int? code(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+  int? totalPending(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.data.total_pending''',
+      ));
+  int? totalSuccess(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.data.total_success''',
+      ));
+  String? taskBody(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.data.tasks[:].body''',
+      ));
+  List? items(dynamic response) => getJsonField(
+        response,
+        r'''$.data.tasks''',
+        true,
+      ) as List?;
+  String? taskCreatedAt(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.data.tasks[:].created_at''',
+      ));
+  int? taskId(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.data.tasks[:].id''',
+      ));
+  int? taskSalesId(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.data.tasks[:].sales_id''',
+      ));
+  String? taskSalesName(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.data.tasks[:].sales_name''',
+      ));
+  String? taskStatus(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.data.tasks[:].status''',
+      ));
+  String? taskTitle(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.data.tasks[:].title''',
+      ));
+  String? taskUpdatedAt(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.data.tasks[:].updated_at''',
+      ));
+  dynamic data(dynamic response) => getJsonField(
+        response,
+        r'''$.data''',
+      );
 }
 
 class CreateTaskCall {
