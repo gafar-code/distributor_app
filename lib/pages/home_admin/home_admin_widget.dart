@@ -1,3 +1,5 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -16,6 +18,7 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
   late HomeAdminModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  late SharedPreferences prefs;
 
   @override
   void initState() {
@@ -429,6 +432,11 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
                     Navigator.pop(context);
                   },
                   child: ListTile(
+                    onTap: () async {
+                      prefs = await SharedPreferences.getInstance();
+                      prefs.clear();
+                      context.go('/loginPage', extra: {'clearStack': true});
+                    },
                     title: Text(
                       'Keluar',
                       style: FlutterFlowTheme.of(context).titleLarge.override(

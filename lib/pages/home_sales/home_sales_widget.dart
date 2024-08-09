@@ -1,3 +1,5 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,7 @@ class HomeSalesWidget extends StatefulWidget {
 
 class _HomeSalesWidgetState extends State<HomeSalesWidget> {
   late HomeSalesModel _model;
+  late SharedPreferences prefs;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -58,7 +61,8 @@ class _HomeSalesWidgetState extends State<HomeSalesWidget> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -83,8 +87,8 @@ class _HomeSalesWidgetState extends State<HomeSalesWidget> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          0.0, 0.0, 12.0, 0.0),
                       child: Text(
                         'selesai 3/4',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -102,8 +106,8 @@ class _HomeSalesWidgetState extends State<HomeSalesWidget> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 0.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          12.0, 12.0, 12.0, 0.0),
                       child: Theme(
                         data: ThemeData(
                           checkboxTheme: const CheckboxThemeData(
@@ -156,7 +160,8 @@ class _HomeSalesWidgetState extends State<HomeSalesWidget> {
               Align(
                 alignment: const AlignmentDirectional(-1.0, 0.0),
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(12.0, 28.0, 0.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      12.0, 28.0, 0.0, 0.0),
                   child: Text(
                     'Akun',
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -169,7 +174,8 @@ class _HomeSalesWidgetState extends State<HomeSalesWidget> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 0.0),
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 0.0),
                 child: InkWell(
                   splashColor: Colors.transparent,
                   focusColor: Colors.transparent,
@@ -204,8 +210,14 @@ class _HomeSalesWidgetState extends State<HomeSalesWidget> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 0.0),
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 0.0),
                 child: ListTile(
+                  onTap: () async {
+                    prefs = await SharedPreferences.getInstance();
+                    prefs.clear();
+                    context.go('/loginPage', extra: {'clearStack': true});
+                  },
                   title: Text(
                     'Keluar',
                     style: FlutterFlowTheme.of(context).titleLarge.override(

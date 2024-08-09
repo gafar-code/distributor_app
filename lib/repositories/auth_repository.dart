@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:distributor_app/app_constants.dart';
 import 'package:distributor_app/models/error_model.dart';
@@ -7,6 +8,7 @@ import 'package:distributor_app/models/login_model.dart';
 import 'package:distributor_app/models/register_model.dart';
 import 'package:distributor_app/utils/failure.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/either.dart';
 
@@ -70,10 +72,16 @@ final class AuthRepository {
   Future<Either<Failure, GeneralModel>> changePassword(
       {required String oldPassword, required String newPaswword}) async {
     final endpoint = Uri.parse('${AppConstants.apiBaseUrl}/auth/change');
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    log(token ?? 'kosong');
     try {
-      final res = await http.post(endpoint,
+      final res = await http.put(endpoint,
           body: jsonEncode(
-              {'old_password': oldPassword, 'new_password': newPaswword}));
+              {'old_password': oldPassword, 'new_password': newPaswword}),
+          headers: {
+            'Authorization': 'Bearer $token',
+          });
       if (res.statusCode == 200) {
         return Either.success(generalModelFromJson(res.body));
       } else {
