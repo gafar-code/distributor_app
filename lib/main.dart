@@ -1,3 +1,4 @@
+import 'package:distributor_app/utils/helper.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -91,6 +92,10 @@ class _MyAppState extends State<MyApp> {
       ),
       themeMode: _themeMode,
       routerConfig: _router,
+      builder: (context, child) {
+        GlobalContextService.init(context); // Initialize the global context
+        return child!;
+      },
     );
   }
 }

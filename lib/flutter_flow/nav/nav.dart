@@ -73,14 +73,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
-      errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? const HomeSalesWidget() : const SplashWidget(),
+      errorBuilder: (context, state) => const SizedBox(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) =>
-              appStateNotifier.loggedIn ? const HomeSalesWidget() : const SplashWidget(),
+          builder: (context, _) => const LoginPageWidget(),
         ),
         FFRoute(
           name: 'LoginPage',
@@ -383,7 +381,8 @@ class TransitionInfo {
   final Duration duration;
   final Alignment? alignment;
 
-  static TransitionInfo appDefault() => const TransitionInfo(hasTransition: false);
+  static TransitionInfo appDefault() =>
+      const TransitionInfo(hasTransition: false);
 }
 
 class RootPageContext {

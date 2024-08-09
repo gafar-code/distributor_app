@@ -1,3 +1,8 @@
+import 'package:distributor_app/controllers/login_controller.dart';
+import 'package:distributor_app/index.dart';
+import 'package:get/get.dart';
+import 'package:get/instance_manager.dart';
+
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -13,9 +18,11 @@ class LoginPageWidget extends StatefulWidget {
 }
 
 class _LoginPageWidgetState extends State<LoginPageWidget> {
+  final loginController = Get.put(LoginController());
   late LoginPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final formkey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -61,21 +68,20 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
         ),
         body: SafeArea(
           top: true,
-          child: ListView(
-            padding: EdgeInsets.zero,
-            scrollDirection: Axis.vertical,
-            children: [
-              Form(
-                key: _model.formKey,
-                autovalidateMode: AutovalidateMode.always,
-                child: Column(
+          child: Form(
+            key: formkey,
+            child: ListView(
+              padding: EdgeInsets.zero,
+              scrollDirection: Axis.vertical,
+              children: [
+                Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(8.0, 24.0, 8.0, 0.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          8.0, 24.0, 8.0, 0.0),
                       child: TextFormField(
-                        controller: _model.textController1,
+                        controller: loginController.emailC,
                         focusNode: _model.textFieldFocusNode1,
                         autofocus: true,
                         obscureText: false,
@@ -126,15 +132,15 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               letterSpacing: 0.0,
                             ),
                         keyboardType: TextInputType.emailAddress,
-                        validator: _model.textController1Validator
-                            .asValidator(context),
+                        validator: (val) =>
+                            val!.isEmpty ? 'Tidak boleh kosong' : null,
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(8.0, 12.0, 8.0, 0.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          8.0, 12.0, 8.0, 0.0),
                       child: TextFormField(
-                        controller: _model.textController2,
+                        controller: loginController.passwordC,
                         focusNode: _model.textFieldFocusNode2,
                         autofocus: true,
                         obscureText: !_model.passwordVisibility,
@@ -196,87 +202,112 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               fontFamily: 'Readex Pro',
                               letterSpacing: 0.0,
                             ),
-                        validator: _model.textController2Validator
-                            .asValidator(context),
+                        validator: (val) =>
+                            val!.isEmpty ? 'Tidak boleh kosong' : null,
                       ),
                     ),
                   ],
                 ),
-              ),
-              Align(
-                alignment: const AlignmentDirectional(1.0, 0.0),
-                child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 12.0, 0.0),
-                  child: Text(
-                    'Lupa sandi?',
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Readex Pro',
-                          color: FlutterFlowTheme.of(context).secondary,
-                          letterSpacing: 0.0,
-                        ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(12.0, 24.0, 12.0, 0.0),
-                child: FFButtonWidget(
-                  onPressed: () {
-                    print('Button pressed ...');
-                  },
-                  text: 'Masuk',
-                  options: FFButtonOptions(
-                    height: 40.0,
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                    iconPadding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).primary,
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Readex Pro',
-                          color: Colors.white,
-                          letterSpacing: 0.0,
-                        ),
-                    elevation: 3.0,
-                    borderSide: const BorderSide(
-                      color: Colors.transparent,
-                      width: 1.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                ),
-              ),
-              Align(
-                alignment: const AlignmentDirectional(0.0, 0.0),
-                child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Align(
-                        alignment: const AlignmentDirectional(0.0, 0.0),
-                        child: Text(
-                          'Sudah memiliki akun ? ',
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Readex Pro',
-                                    letterSpacing: 0.0,
-                                  ),
-                        ),
-                      ),
-                      Text(
-                        'Daftar',
+                Align(
+                  alignment: const AlignmentDirectional(1.0, 0.0),
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 12.0, 12.0, 0.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const ForgotPasswordWidget()));
+                      },
+                      child: Text(
+                        'Lupa sandi?',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Readex Pro',
+                              color: FlutterFlowTheme.of(context).secondary,
                               letterSpacing: 0.0,
-                              fontWeight: FontWeight.bold,
                             ),
                       ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+                Obx(() => loginController.isLoading.isTrue
+                    ? const Center(child: CircularProgressIndicator())
+                    : Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            12.0, 24.0, 12.0, 0.0),
+                        child: FFButtonWidget(
+                          onPressed: () {
+                            if (formkey.currentState!.validate()) {
+                              loginController.login(context);
+                            }
+                          },
+                          text: 'Masuk',
+                          options: FFButtonOptions(
+                            height: 40.0,
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                24.0, 0.0, 24.0, 0.0),
+                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context).primary,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  color: Colors.white,
+                                  letterSpacing: 0.0,
+                                ),
+                            elevation: 3.0,
+                            borderSide: const BorderSide(
+                              color: Colors.transparent,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                      )),
+                Align(
+                  alignment: const AlignmentDirectional(0.0, 0.0),
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 30.0, 0.0, 0.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Align(
+                          alignment: const AlignmentDirectional(0.0, 0.0),
+                          child: Text(
+                            'Sudah memiliki akun ? ',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  letterSpacing: 0.0,
+                                ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            context.push('/registration');
+                          },
+                          child: Text(
+                            'Daftar',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

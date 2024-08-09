@@ -39,6 +39,7 @@ class _AddProofWidgetState extends State<AddProofWidget> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         appBar: AppBar(
@@ -77,7 +78,8 @@ class _AddProofWidgetState extends State<AddProofWidget> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
                   child: Image.network(
@@ -155,8 +157,8 @@ class _AddProofWidgetState extends State<AddProofWidget> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 24.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 0.0, 0.0, 24.0),
                     child: FFButtonWidget(
                       onPressed: () async {
                         context.safePop();
@@ -166,8 +168,8 @@ class _AddProofWidgetState extends State<AddProofWidget> {
                         height: 40.0,
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             24.0, 0.0, 24.0, 0.0),
-                        iconPadding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 0.0, 0.0, 0.0),
                         color: FlutterFlowTheme.of(context).primary,
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(

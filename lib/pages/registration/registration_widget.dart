@@ -1,4 +1,9 @@
-import '/flutter_flow/flutter_flow_icon_button.dart';
+import 'package:distributor_app/controllers/register_controller.dart';
+import 'package:distributor_app/utils/helper.dart';
+import 'package:get/get.dart';
+
+import '../../flutter_flow/flutter_flow_drop_down.dart';
+import '../../flutter_flow/form_field_controller.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -14,6 +19,7 @@ class RegistrationWidget extends StatefulWidget {
 }
 
 class _RegistrationWidgetState extends State<RegistrationWidget> {
+  final registerController = Get.put(RegisterController());
   late RegistrationModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -52,21 +58,6 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primary,
-          automaticallyImplyLeading: false,
-          leading: FlutterFlowIconButton(
-            borderColor: Colors.transparent,
-            borderRadius: 30.0,
-            borderWidth: 1.0,
-            buttonSize: 60.0,
-            icon: const Icon(
-              Icons.arrow_back_rounded,
-              color: Colors.white,
-              size: 30.0,
-            ),
-            onPressed: () {
-              print('IconButton pressed ...');
-            },
-          ),
           title: Text(
             'Pendaftaran',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
@@ -84,15 +75,56 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
           top: true,
           child: Form(
             key: _model.formKey,
-            autovalidateMode: AutovalidateMode.always,
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+            child: ListView(
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(8.0, 24.0, 8.0, 0.0),
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(8.0, 24.0, 8.0, 0.0),
+                  child: FlutterFlowDropDown<String>(
+                    controller: _model.dropDownValueController1 ??=
+                        FormFieldController<String>(null),
+                    options: const ['Sales', 'Admin'],
+                    onChanged: (val) =>
+                        setState(() => _model.dropDownValue1 = val),
+                    width: 199.0,
+                    height: 56.0,
+                    searchHintTextStyle:
+                        FlutterFlowTheme.of(context).labelMedium.override(
+                              fontFamily: 'Readex Pro',
+                              letterSpacing: 0.0,
+                            ),
+                    searchTextStyle:
+                        FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Readex Pro',
+                              letterSpacing: 0.0,
+                            ),
+                    textStyle: FlutterFlowTheme.of(context).bodyMedium.override(
+                          fontFamily: 'Readex Pro',
+                          letterSpacing: 0.0,
+                        ),
+                    hintText: 'Pilih Role',
+                    icon: Icon(
+                      Icons.keyboard_arrow_down_rounded,
+                      color: FlutterFlowTheme.of(context).secondaryText,
+                      size: 24.0,
+                    ),
+                    fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+                    elevation: 2.0,
+                    borderColor: FlutterFlowTheme.of(context).alternate,
+                    borderWidth: 2.0,
+                    borderRadius: 8.0,
+                    margin: const EdgeInsetsDirectional.fromSTEB(
+                        16.0, 4.0, 16.0, 4.0),
+                    hidesUnderline: true,
+                    isOverButton: true,
+                    isMultiSelect: false,
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(8.0, 24.0, 8.0, 0.0),
                   child: TextFormField(
-                    controller: _model.textController1,
+                    controller: registerController.nameC,
                     focusNode: _model.textFieldFocusNode1,
                     autofocus: true,
                     textInputAction: TextInputAction.next,
@@ -142,14 +174,14 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
                           fontFamily: 'Readex Pro',
                           letterSpacing: 0.0,
                         ),
-                    validator:
-                        _model.textController1Validator.asValidator(context),
+                    validator: (val) => val!.isEmpty ? 'Wajib diisi' : null,
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(8.0, 18.0, 8.0, 0.0),
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(8.0, 18.0, 8.0, 0.0),
                   child: TextFormField(
-                    controller: _model.textController2,
+                    controller: registerController.emailC,
                     focusNode: _model.textFieldFocusNode2,
                     autofocus: true,
                     textInputAction: TextInputAction.next,
@@ -200,14 +232,23 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
                           letterSpacing: 0.0,
                         ),
                     keyboardType: TextInputType.emailAddress,
-                    validator:
-                        _model.textController2Validator.asValidator(context),
+                    validator: (val) {
+                      if (val!.isEmpty) {
+                        return 'Wajib diisi';
+                      }
+                      if (!RegExp(kTextValidatorEmailRegex).hasMatch(val)) {
+                        return 'Email tidak valid';
+                      }
+
+                      return null;
+                    },
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(8.0, 18.0, 8.0, 0.0),
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(8.0, 18.0, 8.0, 0.0),
                   child: TextFormField(
-                    controller: _model.textController3,
+                    controller: registerController.passwordC,
                     focusNode: _model.textFieldFocusNode3,
                     autofocus: true,
                     textInputAction: TextInputAction.next,
@@ -271,17 +312,21 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
                           letterSpacing: 0.0,
                         ),
                     keyboardType: TextInputType.visiblePassword,
-                    validator:
-                        _model.textController3Validator.asValidator(context),
+                    validator: (val) {
+                      if (val!.isEmpty) {
+                        return 'Wajib diisi';
+                      }
+                      return null;
+                    },
                   ),
                 ),
                 Align(
                   alignment: const AlignmentDirectional(0.0, 0.0),
                   child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(8.0, 18.0, 8.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        8.0, 18.0, 8.0, 0.0),
                     child: TextFormField(
-                      controller: _model.textController4,
+                      controller: registerController.confirmPasswordC,
                       focusNode: _model.textFieldFocusNode4,
                       autofocus: true,
                       textInputAction: TextInputAction.done,
@@ -345,46 +390,71 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
                             letterSpacing: 0.0,
                           ),
                       keyboardType: TextInputType.visiblePassword,
-                      validator:
-                          _model.textController4Validator.asValidator(context),
+                      validator: (val) {
+                        if (val != registerController.passwordC.text) {
+                          return 'Password tidak sesuai';
+                        }
+                        if (val!.isEmpty) {
+                          return 'Wajib diisi';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                 ),
-                Padding(
-                  padding:
-                      const EdgeInsetsDirectional.fromSTEB(12.0, 24.0, 12.0, 0.0),
-                  child: FFButtonWidget(
-                    onPressed: () {
-                      print('Button pressed ...');
-                    },
-                    text: 'Daftar',
-                    options: FFButtonOptions(
-                      height: 40.0,
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                      iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      color: FlutterFlowTheme.of(context).primary,
-                      textStyle:
-                          FlutterFlowTheme.of(context).titleSmall.override(
-                                fontFamily: 'Readex Pro',
-                                color: Colors.white,
-                                letterSpacing: 0.0,
-                              ),
-                      elevation: 3.0,
-                      borderSide: const BorderSide(
-                        color: Colors.transparent,
-                        width: 1.0,
-                      ),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                ),
+                Obx(() => registerController.isLoading.isTrue
+                    ? const Center(
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 16),
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
+                    : Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            12.0, 24.0, 12.0, 0.0),
+                        child: FFButtonWidget(
+                          onPressed: () {
+                            if (_model.formKey.currentState!.validate()) {
+                              if (_model.dropDownValueController1?.value ==
+                                  null) {
+                                showCustomSnackbar(
+                                    'Pilih role terlebih dahulu');
+                              } else {
+                                registerController.register(context,
+                                    role: _model
+                                        .dropDownValueController1!.value!);
+                              }
+                            }
+                          },
+                          text: 'Daftar',
+                          options: FFButtonOptions(
+                            height: 40.0,
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                24.0, 0.0, 24.0, 0.0),
+                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context).primary,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  color: Colors.white,
+                                  letterSpacing: 0.0,
+                                ),
+                            elevation: 3.0,
+                            borderSide: const BorderSide(
+                              color: Colors.transparent,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                      )),
                 Align(
                   alignment: const AlignmentDirectional(0.0, 0.0),
                   child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 24.0, 0.0, 0.0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -397,14 +467,18 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
                                     letterSpacing: 0.0,
                                   ),
                         ),
-                        Text(
-                          'Masuk',
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Readex Pro',
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                        GestureDetector(
+                          onTap: () => context.pop(),
+                          child: Text(
+                            'Masuk',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
                         ),
                       ],
                     ),

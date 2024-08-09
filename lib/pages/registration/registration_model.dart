@@ -1,9 +1,12 @@
+import '../../flutter_flow/form_field_controller.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'registration_widget.dart' show RegistrationWidget;
 import 'package:flutter/material.dart';
 
 class RegistrationModel extends FlutterFlowModel<RegistrationWidget> {
   ///  State fields for stateful widgets in this page.
+  String? dropDownValue1;
+  FormFieldController<String>? dropDownValueController1;
 
   final formKey = GlobalKey<FormState>();
   // State field(s) for TextField widget.

@@ -59,7 +59,8 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -84,8 +85,8 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          0.0, 0.0, 12.0, 0.0),
                       child: FFButtonWidget(
                         onPressed: () async {
                           context.pushNamed('AddTask');
@@ -121,8 +122,8 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 0.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          12.0, 12.0, 12.0, 0.0),
                       child: Theme(
                         data: ThemeData(
                           checkboxTheme: const CheckboxThemeData(
@@ -139,7 +140,7 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
                             setState(() =>
                                 _model.checkboxListTileValue1 = newValue!);
                             if (newValue!) {
-                              context.pushNamed('DetailTaskSales');
+                              context.pushNamed('DetailTaskAdmin');
                             }
                           },
                           title: Text(
@@ -170,8 +171,8 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 0.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          12.0, 12.0, 12.0, 0.0),
                       child: Theme(
                         data: ThemeData(
                           checkboxTheme: const CheckboxThemeData(
@@ -216,8 +217,8 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 0.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          12.0, 12.0, 12.0, 0.0),
                       child: Theme(
                         data: ThemeData(
                           checkboxTheme: const CheckboxThemeData(
@@ -262,8 +263,8 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 0.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          12.0, 12.0, 12.0, 0.0),
                       child: Theme(
                         data: ThemeData(
                           checkboxTheme: const CheckboxThemeData(
@@ -308,8 +309,8 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 0.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          12.0, 12.0, 12.0, 0.0),
                       child: Theme(
                         data: ThemeData(
                           checkboxTheme: const CheckboxThemeData(
@@ -359,7 +360,8 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
               Align(
                 alignment: const AlignmentDirectional(-1.0, 0.0),
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(12.0, 28.0, 0.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      12.0, 28.0, 0.0, 0.0),
                   child: Text(
                     'Akun',
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -375,8 +377,8 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        12.0, 12.0, 12.0, 0.0),
                     child: InkWell(
                       splashColor: Colors.transparent,
                       focusColor: Colors.transparent,
@@ -416,7 +418,8 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
                 ],
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 0.0),
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 0.0),
                 child: InkWell(
                   splashColor: Colors.transparent,
                   focusColor: Colors.transparent,

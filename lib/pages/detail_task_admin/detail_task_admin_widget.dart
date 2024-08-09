@@ -65,15 +65,22 @@ class _DetailTaskAdminWidgetState extends State<DetailTaskAdminWidget> {
           ),
           actions: [
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 24.0, 0.0),
-              child: Icon(
-                Icons.edit_square,
-                color: FlutterFlowTheme.of(context).warning,
-                size: 24.0,
+              padding:
+                  const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 24.0, 0.0),
+              child: GestureDetector(
+                onTap: () {
+                  context.pushNamed('EditTask');
+                },
+                child: Icon(
+                  Icons.edit_square,
+                  color: FlutterFlowTheme.of(context).warning,
+                  size: 24.0,
+                ),
               ),
             ),
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 24.0, 0.0),
+              padding:
+                  const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 24.0, 0.0),
               child: Icon(
                 Icons.delete_forever,
                 color: FlutterFlowTheme.of(context).error,
@@ -92,7 +99,8 @@ class _DetailTaskAdminWidgetState extends State<DetailTaskAdminWidget> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -152,7 +160,8 @@ class _DetailTaskAdminWidgetState extends State<DetailTaskAdminWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 0.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      12.0, 12.0, 0.0, 0.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -195,7 +204,8 @@ class _DetailTaskAdminWidgetState extends State<DetailTaskAdminWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 0.0, 0.0),
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 0.0, 0.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -238,7 +248,8 @@ class _DetailTaskAdminWidgetState extends State<DetailTaskAdminWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 0.0, 0.0),
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 0.0, 0.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -281,7 +292,8 @@ class _DetailTaskAdminWidgetState extends State<DetailTaskAdminWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -309,11 +321,12 @@ class _DetailTaskAdminWidgetState extends State<DetailTaskAdminWidget> {
                 ),
                 Expanded(
                   child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        12.0, 12.0, 12.0, 0.0),
                     child: GridView(
                       padding: EdgeInsets.zero,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
                         crossAxisSpacing: 10.0,
                         mainAxisSpacing: 10.0,
@@ -343,8 +356,9 @@ class _DetailTaskAdminWidgetState extends State<DetailTaskAdminWidget> {
                                       color: Color(0x9F14181B),
                                     ),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          2.0, 2.0, 2.0, 2.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              2.0, 2.0, 2.0, 2.0),
                                       child: Text(
                                         'Mengantar makanan',
                                         maxLines: 2,
