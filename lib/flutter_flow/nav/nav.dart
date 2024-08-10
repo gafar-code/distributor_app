@@ -8,7 +8,6 @@ import '/backend/schema/structs/index.dart';
 import '/auth/custom_auth/custom_auth_user_provider.dart';
 
 import '/index.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
 export 'package:go_router/go_router.dart';
@@ -47,26 +46,6 @@ class AppStateNotifier extends ChangeNotifier {
   /// Mark as not needing to notify on a sign in / out when we intend
   /// to perform subsequent actions (such as navigation) afterwards.
   void updateNotifyOnAuthChange(bool notify) => notifyOnAuthChange = notify;
-
-  void update(DistributorAppAuthUser newUser) {
-    final shouldUpdate =
-        user?.uid == null || newUser.uid == null || user?.uid != newUser.uid;
-    initialUser ??= newUser;
-    user = newUser;
-    // Refresh the app on auth change unless explicitly marked otherwise.
-    // No need to update unless the user has changed.
-    if (notifyOnAuthChange && shouldUpdate) {
-      notifyListeners();
-    }
-    // Once again mark the notifier as needing to update on auth change
-    // (in order to catch sign in / out events).
-    updateNotifyOnAuthChange(true);
-  }
-
-  void stopShowingSplashImage() {
-    showSplashImage = false;
-    notifyListeners();
-  }
 }
 
 GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
@@ -78,7 +57,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => const LoginPageWidget(),
+          builder: (context, _) => const SplashWidget(),
         ),
         FFRoute(
           name: 'LoginPage',
@@ -327,19 +306,7 @@ class FFRoute {
                   builder: (context, _) => builder(context, ffParams),
                 )
               : builder(context, ffParams);
-          final child = appStateNotifier.loading
-              ? Center(
-                  child: SizedBox(
-                    width: 50.0,
-                    height: 50.0,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        FlutterFlowTheme.of(context).primary,
-                      ),
-                    ),
-                  ),
-                )
-              : page;
+          final child = page;
 
           final transitionInfo = state.transitionInfo;
           return transitionInfo.hasTransition

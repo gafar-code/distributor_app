@@ -56,15 +56,6 @@ class _MyAppState extends State<MyApp> {
 
     _appStateNotifier = AppStateNotifier.instance;
     _router = createRouter(_appStateNotifier);
-    userStream = distributorAppAuthUserStream()
-      ..listen((user) {
-        _appStateNotifier.update(user);
-      });
-
-    Future.delayed(
-      const Duration(milliseconds: 1000),
-      () => _appStateNotifier.stopShowingSplashImage(),
-    );
   }
 
   void setThemeMode(ThemeMode mode) => setState(() {
@@ -75,6 +66,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       title: 'DistributorApp',
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,

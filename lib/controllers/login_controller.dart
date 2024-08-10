@@ -27,6 +27,7 @@ final class LoginController extends GetxController {
         showCustomSnackbar(e.message);
       }, success: (s) async {
         prefs.setString('token', s.data.token);
+        prefs.setString('role', s.data.user.role);
         context.go(s.data.user.role == 'Admin' ? '/homeAdmin' : '/homeSales',
             extra: {'clearStack': true});
       });
