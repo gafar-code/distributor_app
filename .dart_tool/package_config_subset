@@ -122,6 +122,10 @@ flutter_shaders
 2.19
 file:///Users/fauzirramadan/.pub-cache/hosted/pub.dev/flutter_shaders-0.1.2/
 file:///Users/fauzirramadan/.pub-cache/hosted/pub.dev/flutter_shaders-0.1.2/lib/
+flutter_staggered_grid_view
+2.12
+file:///Users/fauzirramadan/.pub-cache/hosted/pub.dev/flutter_staggered_grid_view-0.7.0/
+file:///Users/fauzirramadan/.pub-cache/hosted/pub.dev/flutter_staggered_grid_view-0.7.0/lib/
 font_awesome_flutter
 3.0
 file:///Users/fauzirramadan/.pub-cache/hosted/pub.dev/font_awesome_flutter-10.6.0/
@@ -150,6 +154,10 @@ http_parser
 2.12
 file:///Users/fauzirramadan/.pub-cache/hosted/pub.dev/http_parser-4.0.2/
 file:///Users/fauzirramadan/.pub-cache/hosted/pub.dev/http_parser-4.0.2/lib/
+infinite_scroll_pagination
+2.14
+file:///Users/fauzirramadan/.pub-cache/hosted/pub.dev/infinite_scroll_pagination-4.0.0/
+file:///Users/fauzirramadan/.pub-cache/hosted/pub.dev/infinite_scroll_pagination-4.0.0/lib/
 intl
 3.0
 file:///Users/fauzirramadan/.pub-cache/hosted/pub.dev/intl-0.19.0/
@@ -294,6 +302,10 @@ shared_preferences_windows
 2.19
 file:///Users/fauzirramadan/.pub-cache/hosted/pub.dev/shared_preferences_windows-2.3.2/
 file:///Users/fauzirramadan/.pub-cache/hosted/pub.dev/shared_preferences_windows-2.3.2/lib/
+sliver_tools
+2.12
+file:///Users/fauzirramadan/.pub-cache/hosted/pub.dev/sliver_tools-0.2.12/
+file:///Users/fauzirramadan/.pub-cache/hosted/pub.dev/sliver_tools-0.2.12/lib/
 source_span
 2.18
 file:///Users/fauzirramadan/.pub-cache/hosted/pub.dev/source_span-1.10.0/

@@ -42,7 +42,7 @@ final class RegisterController extends GetxController {
         showCustomSnackbar('Registrasi berhasil');
         prefs.setString('token', s.data.token);
         prefs.setString('role', s.data.user.role);
-        context.go(s.data.user.role == 'Admin' ? '/homeAdmin' : '/homeSales',
+        context.go(s.data.user.role == 'ADMIN' ? '/homeAdmin' : '/homeSales',
             extra: {'clearStack': true});
       });
     } finally {

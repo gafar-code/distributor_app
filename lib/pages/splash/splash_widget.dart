@@ -41,7 +41,7 @@ class _SplashWidgetState extends State<SplashWidget> {
     final isLoggedIn = prefs.containsKey('token');
     final role = prefs.getString('role');
     if (isLoggedIn) {
-      context.go(role == 'Admin' ? '/homeAdmin' : '/homeSales',
+      context.go(role == 'ADMIN' ? '/homeAdmin' : '/homeSales',
           extra: {'clearStack': true});
     } else {
       context.go('/loginPage', extra: {'clearStack': true});

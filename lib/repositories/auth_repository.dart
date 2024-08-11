@@ -7,12 +7,15 @@ import 'package:distributor_app/models/general_model.dart';
 import 'package:distributor_app/models/login_model.dart';
 import 'package:distributor_app/models/register_model.dart';
 import 'package:distributor_app/utils/failure.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/either.dart';
+import '../utils/prefs.dart';
 
 final class AuthRepository {
+  final prefs = Get.find<PrefsService>().prefs;
+
   Future<Either<Failure, LoginModel>> login(
       {required String email, required String password}) async {
     final endpoint = Uri.parse('${AppConstants.apiBaseUrl}/auth/login');
@@ -72,7 +75,6 @@ final class AuthRepository {
   Future<Either<Failure, GeneralModel>> changePassword(
       {required String oldPassword, required String newPaswword}) async {
     final endpoint = Uri.parse('${AppConstants.apiBaseUrl}/auth/change');
-    final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
     log(token ?? 'kosong');
     try {

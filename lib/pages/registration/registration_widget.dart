@@ -414,6 +414,11 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
                             12.0, 24.0, 12.0, 0.0),
                         child: FFButtonWidget(
                           onPressed: () {
+                            final role =
+                                _model.dropDownValueController1!.value ==
+                                        'Sales'
+                                    ? 'SALES'
+                                    : 'ADMIN';
                             if (_model.formKey.currentState!.validate()) {
                               if (_model.dropDownValueController1?.value ==
                                   null) {
@@ -421,8 +426,7 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
                                     'Pilih role terlebih dahulu');
                               } else {
                                 registerController.register(context,
-                                    role: _model
-                                        .dropDownValueController1!.value!);
+                                    role: role);
                               }
                             }
                           },
