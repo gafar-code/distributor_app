@@ -84,7 +84,9 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
                       const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      context.pushNamed('AddTask');
+                      context.pushNamed('AddTask').then((_) {
+                        controller.refreshTasks();
+                      });
                     },
                     text: 'Tambah',
                     options: FFButtonOptions(
@@ -141,7 +143,12 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
                           child: CheckboxListTile(
                             value: data.status == 'SUCCESS',
                             onChanged: (newValue) async {
-                              await context.pushNamed('DetailTaskAdmin');
+                              await context.pushNamed('DetailTaskAdmin',
+                                  pathParameters: {
+                                    'id': data.id.toString()
+                                  }).then((_) {
+                                controller.refreshTasks();
+                              });
                             },
                             title: Text(
                               data.title,

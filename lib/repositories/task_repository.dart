@@ -36,7 +36,7 @@ final class TaskRepository {
   }
 
   Future<Either<Failure, TaskModel>> getDetailTask({required int id}) async {
-    final endpoint = Uri.parse('${AppConstants.apiBaseUrl}/task/{$id}');
+    final endpoint = Uri.parse('${AppConstants.apiBaseUrl}/task/$id');
     final token = prefs.getString('token');
     try {
       final res = await http.get(endpoint, headers: {
@@ -95,6 +95,24 @@ final class TaskRepository {
             'status': params.status,
             'sales_name': params.salesName
           }));
+      log(res.body);
+      if (res.statusCode == 200) {
+        return Either.success(generalModelFromJson(res.body));
+      } else {
+        return Either.error(Failure(errorModelFromJson(res.body).message));
+      }
+    } catch (e) {
+      return Either.error(Failure(e.toString()));
+    }
+  }
+
+  Future<Either<Failure, GeneralModel>> deleteTask({required int id}) async {
+    final endpoint = Uri.parse('${AppConstants.apiBaseUrl}/task/$id');
+    final token = prefs.getString('token');
+    try {
+      final res = await http.delete(endpoint, headers: {
+        'Authorization': 'Bearer $token',
+      });
       log(res.body);
       if (res.statusCode == 200) {
         return Either.success(generalModelFromJson(res.body));

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:distributor_app/models/task_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -76,8 +77,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         ),
         FFRoute(
           name: 'DetailTaskSales',
-          path: '/detailTaskSales',
-          builder: (context, params) => const DetailTaskSalesWidget(),
+          path: '/detailTaskSales/:id',
+          builder: (context, params) {
+            final id = params.getParam('id', ParamType.int);
+            return DetailTaskSalesWidget(
+              id: id,
+            );
+          },
         ),
         FFRoute(
           name: 'ImageDetail',
@@ -111,13 +117,23 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         ),
         FFRoute(
           name: 'DetailTaskAdmin',
-          path: '/detailTaskAdmin',
-          builder: (context, params) => const DetailTaskAdminWidget(),
+          path: '/detailTaskAdmin/:id',
+          builder: (context, params) {
+            final id = params.getParam('id', ParamType.int);
+            return DetailTaskAdminWidget(
+              id: id,
+            );
+          },
         ),
         FFRoute(
           name: 'EditTask',
           path: '/editTask',
-          builder: (context, params) => const EditTaskWidget(),
+          builder: (context, params) {
+            final data = params.state.extra as Map<String, dynamic>;
+            return EditTaskWidget(
+              data: Task.fromJson(data),
+            );
+          },
         ),
         FFRoute(
           name: 'Splash',

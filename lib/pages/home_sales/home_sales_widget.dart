@@ -131,7 +131,8 @@ class _HomeSalesWidgetState extends State<HomeSalesWidget> {
                             child: CheckboxListTile(
                               value: data.status == 'SUCCESS',
                               onChanged: (newValue) async {
-                                await context.pushNamed('DetailTaskSales');
+                                await context.pushNamed('DetailTaskSales',
+                                    pathParameters: {'id': data.id.toString()});
                               },
                               title: Text(
                                 data.title,

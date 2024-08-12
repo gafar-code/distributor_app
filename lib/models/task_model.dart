@@ -78,4 +78,15 @@ class Task {
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
       );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "title": title,
+        "body": body,
+        "status": status,
+        "sales_id": salesId,
+        "sales_name": salesName,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+      };
 }

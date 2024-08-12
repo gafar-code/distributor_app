@@ -22,6 +22,10 @@ final class HomeController extends GetxController {
     });
   }
 
+  void refreshTasks() {
+    pagingController.refresh();
+  }
+
   void getTasks(int paginationId) async {
     try {
       isLoading.value = true;
