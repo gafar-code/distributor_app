@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyCUAQ_rswwvAbjlZWsrAVdyEwu-khewTjY</string>
+	<string>AIzaSyBOhv0k9XJWSIjfk52wbOXSLvdNeOuitHo</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1031288970059</string>
+	<string>114794500579</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>gafar.code.distributorapp</string>
 	<key>PROJECT_ID</key>
-	<string>sales-3t1asd</string>
+	<string>distributor-app-4dd89</string>
 	<key>STORAGE_BUCKET</key>
-	<string>sales-3t1asd.appspot.com</string>
+	<string>distributor-app-4dd89.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1031288970059:ios:08691ef768cb3121b066ce</string>
+	<string>1:114794500579:ios:0e4e4f8a4c18967c9750d6</string>
 </dict>
 </plist>

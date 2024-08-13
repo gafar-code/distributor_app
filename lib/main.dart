@@ -1,15 +1,17 @@
+import 'package:distributor_app/backend/firebase/firebase_notification_service.dart';
+import 'package:distributor_app/firebase_options.dart';
 import 'package:distributor_app/utils/helper.dart';
 import 'package:distributor_app/utils/prefs.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:get/get.dart';
 
 import 'auth/custom_auth/auth_util.dart';
 import 'auth/custom_auth/custom_auth_user_provider.dart';
 
-import 'backend/firebase/firebase_config.dart';
 import 'flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/foundation.dart';
@@ -19,11 +21,18 @@ import 'flutter_flow/nav/nav.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Get.putAsync(() => PrefsService().init());
-  GoRouter.optionURLReflectsImperativeAPIs = true;
-  usePathUrlStrategy();
-  await initFirebase();
 
+  GoRouter.optionURLReflectsImperativeAPIs = true;
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await FlutterFlowTheme.initialize();
+
+  final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+  final NotificationService notificationService =
+      NotificationService(firebaseMessaging: firebaseMessaging);
+
+  notificationService.notificationInit();
 
   await authManager.initialize();
 
@@ -33,6 +42,8 @@ void main() async {
 
   runApp(const MyApp());
 }
+
+final globalRouter = createRouter(AppStateNotifier.instance);
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});

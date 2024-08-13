@@ -51,6 +51,7 @@
                 <data android:scheme="distributorapp" android:host="distributorapp.com" />
             </intent-filter>
 
+
         </activity>
 
         <!-- Don't delete the meta-data below.
@@ -59,7 +60,9 @@
             android:name="flutterEmbedding"
             android:value="2" />
 
-
+  <meta-data
+            android:name="com.google.firebase.messaging.distributorapp_important_channel"
+            android:value="distributorapp_important_channel"/>
 
     </application>
 </manifest>

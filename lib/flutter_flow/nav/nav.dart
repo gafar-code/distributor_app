@@ -51,7 +51,10 @@ class AppStateNotifier extends ChangeNotifier {
   void updateNotifyOnAuthChange(bool notify) => notifyOnAuthChange = notify;
 }
 
+final navigatorKey = GlobalKey<NavigatorState>();
+
 GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
+      navigatorKey: navigatorKey,
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
