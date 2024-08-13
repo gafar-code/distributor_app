@@ -23,6 +23,8 @@ final class AddTaskController extends GetxController {
         showCustomSnackbar(e.message);
       }, success: (s) async {
         context.pop();
+        titleC.clear();
+        descriptionC.clear();
         showCustomSnackbar(s.message);
       });
     } finally {

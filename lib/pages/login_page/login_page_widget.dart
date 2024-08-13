@@ -1,7 +1,6 @@
 import 'package:distributor_app/controllers/login_controller.dart';
 import 'package:distributor_app/index.dart';
 import 'package:get/get.dart';
-import 'package:get/instance_manager.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';

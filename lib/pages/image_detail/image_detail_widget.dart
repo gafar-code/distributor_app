@@ -37,9 +37,7 @@ class _ImageDetailWidgetState extends State<ImageDetailWidget> {
     super.initState();
     _model = createModel(context, () => ImageDetailModel());
     proofController.getProofs(widget.taskId);
-    setState(() {
-      currentIndex = widget.initIndex;
-    });
+    currentIndex = widget.initIndex;
   }
 
   @override

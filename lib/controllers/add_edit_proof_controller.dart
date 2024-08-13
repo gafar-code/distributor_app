@@ -60,6 +60,12 @@ final class AddEditProofController extends GetxController {
         }, success: (s) async {
           context.pop();
           showCustomSnackbar(s.message);
+          image.value = null;
+          lat.value = null;
+          lng.value = null;
+          address.value = null;
+          imagePath.value = null;
+          descriptionC.clear();
         });
       }
     } finally {

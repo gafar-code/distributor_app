@@ -18,6 +18,13 @@ final class LoginController extends GetxController {
     super.onInit();
   }
 
+  @override
+  void dispose() {
+    emailC.dispose();
+    passwordC.dispose();
+    super.dispose();
+  }
+
   void login(BuildContext context) async {
     try {
       isLoading.value = true;
@@ -28,6 +35,8 @@ final class LoginController extends GetxController {
       }, success: (s) async {
         prefs.setString('token', s.data.token);
         prefs.setString('role', s.data.user.role);
+        emailC.clear();
+        passwordC.clear();
         context.go(s.data.user.role == 'ADMIN' ? '/homeAdmin' : '/homeSales',
             extra: {'clearStack': true});
       });

@@ -29,6 +29,7 @@ class AddProofWidget extends StatefulWidget {
 
 class _AddProofWidgetState extends State<AddProofWidget> {
   final addProofController = Get.put(AddEditProofController());
+  final scrollController = ScrollController();
   late AddProofModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -38,11 +39,19 @@ class _AddProofWidgetState extends State<AddProofWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => AddProofModel());
-    _model.textFieldFocusNode ??= FocusNode();
+    _model.textFieldFocusNode = FocusNode();
     _requestLocationPermission();
     if (widget.isEdit && widget.description != 'empty') {
       addProofController.descriptionC.text = widget.description.toString();
     }
+  }
+
+  void _scrollToField() {
+    scrollController.animateTo(
+      scrollController.position.maxScrollExtent,
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.easeInOut,
+    );
   }
 
   Future<void> _requestLocationPermission() async {
@@ -73,6 +82,15 @@ class _AddProofWidgetState extends State<AddProofWidget> {
     );
   }
 
+  void clearFields() {
+    addProofController.image.value = null;
+    addProofController.lat.value = null;
+    addProofController.lng.value = null;
+    addProofController.address.value = null;
+    addProofController.imagePath.value = null;
+    addProofController.descriptionC.clear();
+  }
+
   @override
   void dispose() {
     _model.dispose();
@@ -82,10 +100,11 @@ class _AddProofWidgetState extends State<AddProofWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+    return PopScope(
+      onPopInvoked: (didPop) {
+        clearFields();
+      },
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         appBar: AppBar(
@@ -102,6 +121,7 @@ class _AddProofWidgetState extends State<AddProofWidget> {
               size: 30.0,
             ),
             onPressed: () async {
+              clearFields();
               context.pop();
             },
           ),
@@ -120,8 +140,8 @@ class _AddProofWidgetState extends State<AddProofWidget> {
         ),
         body: Form(
           key: formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
+          child: ListView(
+            controller: scrollController,
             children: [
               widget.isEdit == true
                   ? const SizedBox()
@@ -141,8 +161,11 @@ class _AddProofWidgetState extends State<AddProofWidget> {
                           24.0, 24.0, 24.0, 12.0),
                       child: TextFormField(
                         controller: addProofController.descriptionC,
-                        focusNode: _model.textFieldFocusNode,
-                        autofocus: true,
+                        onTap: () {
+                          if (addProofController.image.value != null) {
+                            _scrollToField();
+                          }
+                        },
                         obscureText: false,
                         decoration: InputDecoration(
                           labelText: 'Deskripsi',

@@ -40,6 +40,11 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
     _model.textFieldFocusNode2 ??= FocusNode();
   }
 
+  void clearFields() {
+    addTaskController.descriptionC.clear();
+    addTaskController.titleC.clear();
+  }
+
   @override
   void dispose() {
     _model.dispose();
@@ -48,8 +53,10 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+    return PopScope(
+      onPopInvoked: (_) {
+        clearFields();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -67,6 +74,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
               size: 30.0,
             ),
             onPressed: () async {
+              clearFields();
               context.pop();
             },
           ),
