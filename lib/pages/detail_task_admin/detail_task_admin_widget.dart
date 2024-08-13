@@ -443,10 +443,9 @@ class _DetailTaskAdminWidgetState extends State<DetailTaskAdminWidget> {
                                           ),
                                           child: Stack(
                                             children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(4),
+                                              Positioned.fill(
                                                 child: Image.network(
+                                                  fit: BoxFit.cover,
                                                   getImageRemote(data.image),
                                                   errorBuilder: (context, error,
                                                       stackTrace) {

@@ -44,6 +44,7 @@ final class RegisterController extends GetxController {
         prefs.setString('role', s.data.user.role);
         context.go(s.data.user.role == 'ADMIN' ? '/homeAdmin' : '/homeSales',
             extra: {'clearStack': true});
+        clearFields();
       });
     } finally {
       isLoading.value = false;

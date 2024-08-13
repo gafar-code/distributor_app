@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:distributor_app/models/task_model.dart';
+import 'package:distributor_app/utils/prefs.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '/backend/schema/structs/index.dart';
@@ -58,7 +60,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => const SplashWidget(),
+          builder: (context, _) {
+            final prefs = Get.find<PrefsService>().prefs;
+            if (prefs.containsKey('token')) {
+              return prefs.getString('role') == 'ADMIN'
+                  ? const HomeAdminWidget()
+                  : const HomeSalesWidget();
+            } else {
+              return const LoginPageWidget();
+            }
+          },
         ),
         FFRoute(
           name: 'LoginPage',

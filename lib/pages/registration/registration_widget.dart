@@ -42,6 +42,13 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
     _model.textFieldFocusNode4 ??= FocusNode();
   }
 
+  void clearFields() {
+    registerController.nameC.clear();
+    registerController.emailC.clear();
+    registerController.passwordC.clear();
+    registerController.confirmPasswordC.clear();
+  }
+
   @override
   void dispose() {
     _model.dispose();
@@ -51,13 +58,16 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+    return PopScope(
+      onPopInvoked: (didPop) {
+        clearFields();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primary,
+          foregroundColor: Colors.white,
           title: Text(
             'Pendaftaran',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
@@ -472,7 +482,10 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
                                   ),
                         ),
                         GestureDetector(
-                          onTap: () => context.pop(),
+                          onTap: () {
+                            clearFields();
+                            context.pop();
+                          },
                           child: Text(
                             'Masuk',
                             style: FlutterFlowTheme.of(context)

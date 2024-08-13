@@ -160,6 +160,7 @@ class _EditTaskWidgetState extends State<EditTaskWidget> {
                 controller: editTaskController.descriptionC,
                 focusNode: _model.textFieldFocusNode2,
                 autofocus: true,
+                maxLines: 5,
                 obscureText: false,
                 decoration: InputDecoration(
                   labelText: 'Deskripsi',

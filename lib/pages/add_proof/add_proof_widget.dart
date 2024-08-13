@@ -285,7 +285,7 @@ class _AddProofWidgetState extends State<AddProofWidget> {
       child: const Column(
         children: [
           Icon(
-            Icons.image,
+            Icons.camera_alt_rounded,
             size: 100,
           ),
           Text('KLIK UNTUK AMBIL GAMBAR')

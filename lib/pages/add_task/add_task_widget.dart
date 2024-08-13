@@ -157,6 +157,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                 child: TextFormField(
                     controller: addTaskController.descriptionC,
                     focusNode: _model.textFieldFocusNode2,
+                    maxLines: 5,
                     autofocus: true,
                     obscureText: false,
                     decoration: InputDecoration(
