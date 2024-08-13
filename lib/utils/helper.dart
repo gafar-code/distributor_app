@@ -12,3 +12,7 @@ dynamic showCustomSnackbar(String message) {
   ScaffoldMessenger.of(GlobalContextService.context)
       .showSnackBar(SnackBar(content: Text(message)));
 }
+
+String getImageRemote(String path) {
+  return 'https://distributor-backend.fly.dev/public/images/$path';
+}

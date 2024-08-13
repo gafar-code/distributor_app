@@ -7,7 +7,7 @@ class AddProofModel extends FlutterFlowModel<AddProofWidget> {
 
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode;
-  TextEditingController? textController;
+  TextEditingController textController = TextEditingController();
   String? Function(BuildContext, String?)? textControllerValidator;
 
   @override
@@ -16,6 +16,6 @@ class AddProofModel extends FlutterFlowModel<AddProofWidget> {
   @override
   void dispose() {
     textFieldFocusNode?.dispose();
-    textController?.dispose();
+    textController.dispose();
   }
 }

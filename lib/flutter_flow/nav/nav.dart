@@ -87,8 +87,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         ),
         FFRoute(
           name: 'ImageDetail',
-          path: '/imageDetail',
-          builder: (context, params) => const ImageDetailWidget(),
+          path: '/imageDetail/:id/:initIndex',
+          builder: (context, params) {
+            final id = params.getParam('id', ParamType.int);
+            final initIndex = params.getParam('initIndex', ParamType.int);
+
+            return ImageDetailWidget(
+              taskId: id,
+              initIndex: initIndex,
+            );
+          },
         ),
         FFRoute(
           name: 'ForgotPassword',
@@ -106,10 +114,21 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const HomeAdminWidget(),
         ),
         FFRoute(
-          name: 'AddProof',
-          path: '/addProof',
-          builder: (context, params) => const AddProofWidget(),
-        ),
+            name: 'AddProof',
+            path: '/addProof/:id/:isEdit/:description',
+            builder: (context, params) {
+              final id = params.getParam('id', ParamType.int);
+              final isEdit = params.getParam('isEdit', ParamType.bool);
+              final description = params.getParam(
+                'description',
+                ParamType.String,
+              );
+              return AddProofWidget(
+                taskId: id,
+                isEdit: isEdit,
+                description: description,
+              );
+            }),
         FFRoute(
           name: 'AddTask',
           path: '/addTask',

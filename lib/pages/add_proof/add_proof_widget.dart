@@ -1,3 +1,10 @@
+import 'dart:developer';
+
+import 'package:distributor_app/controllers/add_edit_proof_controller.dart';
+import 'package:distributor_app/utils/helper.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
+
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -7,24 +14,63 @@ import 'add_proof_model.dart';
 export 'add_proof_model.dart';
 
 class AddProofWidget extends StatefulWidget {
-  const AddProofWidget({super.key});
+  final int taskId;
+  final String? description;
+  final bool isEdit;
+  const AddProofWidget(
+      {super.key,
+      required this.taskId,
+      required this.isEdit,
+      this.description});
 
   @override
   State<AddProofWidget> createState() => _AddProofWidgetState();
 }
 
 class _AddProofWidgetState extends State<AddProofWidget> {
+  final addProofController = Get.put(AddEditProofController());
   late AddProofModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => AddProofModel());
-
-    _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
+    _requestLocationPermission();
+    if (widget.isEdit && widget.description != 'empty') {
+      addProofController.descriptionC.text = widget.description.toString();
+    }
+  }
+
+  Future<void> _requestLocationPermission() async {
+    LocationPermission permission =
+        await addProofController.locaationService.requestLocationPermission();
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever) {
+      _showPermissionDeniedDialog();
+    }
+  }
+
+  void _showPermissionDeniedDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Izin akses lokasi ditolak.'),
+        content: const Text('Akses lokasi diperlukan untuk melanjutkan'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pop(context); // Navigate back to the previous screen
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -60,7 +106,7 @@ class _AddProofWidgetState extends State<AddProofWidget> {
             },
           ),
           title: Text(
-            'Tambah bukti',
+            widget.isEdit == true ? 'Edit Bukti' : 'Tambah bukti',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
                   fontFamily: 'Outfit',
                   color: Colors.white,
@@ -72,24 +118,19 @@ class _AddProofWidgetState extends State<AddProofWidget> {
           centerTitle: false,
           elevation: 2.0,
         ),
-        body: SafeArea(
-          top: true,
+        body: Form(
+          key: formKey,
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Padding(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.network(
-                    'https://picsum.photos/seed/560/600',
-                    width: 300.0,
-                    height: 300.0,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+              widget.isEdit == true
+                  ? const SizedBox()
+                  : Obx(() => Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          0.0, 24.0, 0.0, 0.0),
+                      child: addProofController.image.value != null
+                          ? imageWidget()
+                          : takeImageWidget())),
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -99,7 +140,7 @@ class _AddProofWidgetState extends State<AddProofWidget> {
                       padding: const EdgeInsetsDirectional.fromSTEB(
                           24.0, 24.0, 24.0, 12.0),
                       child: TextFormField(
-                        controller: _model.textController,
+                        controller: addProofController.descriptionC,
                         focusNode: _model.textFieldFocusNode,
                         autofocus: true,
                         obscureText: false,
@@ -151,40 +192,55 @@ class _AddProofWidgetState extends State<AddProofWidget> {
                         textAlign: TextAlign.start,
                         maxLines: 5,
                         maxLength: 80,
-                        validator:
-                            _model.textControllerValidator.asValidator(context),
+                        validator: (val) => val!.isEmpty ? 'Wajib diisi' : null,
                       ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(
                         0.0, 0.0, 0.0, 24.0),
-                    child: FFButtonWidget(
-                      onPressed: () async {
-                        context.safePop();
-                      },
-                      text: 'Simpan',
-                      options: FFButtonOptions(
-                        height: 40.0,
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            24.0, 0.0, 24.0, 0.0),
-                        iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).primary,
-                        textStyle:
-                            FlutterFlowTheme.of(context).titleSmall.override(
-                                  fontFamily: 'Readex Pro',
-                                  color: Colors.white,
-                                  letterSpacing: 0.0,
-                                ),
-                        elevation: 3.0,
-                        borderSide: const BorderSide(
-                          color: Colors.transparent,
-                          width: 1.0,
-                        ),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
+                    child: Obx(() => addProofController.isLoading.isTrue
+                        ? const CircularProgressIndicator()
+                        : FFButtonWidget(
+                            onPressed: () async {
+                              if (widget.isEdit) {
+                                addProofController.addOrEditProof(context,
+                                    taskId: widget.taskId, isEdit: true);
+                              } else {
+                                if (formKey.currentState!.validate()) {
+                                  if (addProofController.image.value != null) {
+                                    addProofController.addOrEditProof(context,
+                                        taskId: widget.taskId, isEdit: false);
+                                  } else {
+                                    showCustomSnackbar(
+                                        'Masukkan gambar terlebih dahulu');
+                                  }
+                                }
+                              }
+                            },
+                            text: 'Simpan',
+                            options: FFButtonOptions(
+                              height: 40.0,
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  24.0, 0.0, 24.0, 0.0),
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              color: FlutterFlowTheme.of(context).primary,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Colors.white,
+                                    letterSpacing: 0.0,
+                                  ),
+                              elevation: 3.0,
+                              borderSide: const BorderSide(
+                                color: Colors.transparent,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          )),
                   ),
                 ],
               ),
@@ -192,6 +248,62 @@ class _AddProofWidgetState extends State<AddProofWidget> {
           ),
         ),
       ),
+    );
+  }
+
+  GestureDetector takeImageWidget() {
+    return GestureDetector(
+      onTap: () async {
+        await addProofController.takeImage();
+        log(addProofController.lat.toString());
+        log(addProofController.lng.toString());
+        log(addProofController.address.toString());
+      },
+      child: const Column(
+        children: [
+          Icon(
+            Icons.image,
+            size: 100,
+          ),
+          Text('KLIK UNTUK AMBIL GAMBAR')
+        ],
+      ),
+    );
+  }
+
+  Column imageWidget() {
+    return Column(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(8.0),
+          child: Image.file(
+            addProofController.image.value!,
+            width: 300.0,
+            height: 300.0,
+            fit: BoxFit.cover,
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        addProofController.getLocationLoading.isTrue
+            ? const Text('Mengambil data lokasi....')
+            : Text(
+                'Lokasi : ${addProofController.address}',
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+        const SizedBox(
+          height: 15,
+        ),
+        GestureDetector(
+            onTap: () async {
+              await addProofController.takeImage();
+            },
+            child: const Text(
+              'UBAH GAMBAR',
+              style: TextStyle(decoration: TextDecoration.underline),
+            ))
+      ],
     );
   }
 }
