@@ -1,3 +1,4 @@
+import 'package:distributor_app/utils/helper.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -244,7 +245,7 @@ class _HomeSalesWidgetState extends State<HomeSalesWidget> {
               child: ListTile(
                 onTap: () async {
                   await prefs.clear();
-                  Get.delete<HomeController>();
+                  clearControllers();
                   context.go('/loginPage', extra: {'clearStack': true});
                 },
                 title: Text(

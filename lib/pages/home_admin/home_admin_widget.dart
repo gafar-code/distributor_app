@@ -1,5 +1,6 @@
 import 'package:distributor_app/controllers/home_controller.dart';
 import 'package:distributor_app/models/task_model.dart';
+import 'package:distributor_app/utils/helper.dart';
 import 'package:distributor_app/utils/prefs.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -252,7 +253,7 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
               child: ListTile(
                 onTap: () async {
                   await prefs.clear();
-                  Get.delete<HomeController>();
+                  clearControllers();
                   context.go('/loginPage', extra: {'clearStack': true});
                 },
                 title: Text(
