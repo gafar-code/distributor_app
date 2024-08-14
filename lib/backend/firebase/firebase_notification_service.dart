@@ -7,6 +7,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/home_controller.dart';
 import 'notification_model.dart';
 
 class NotificationService {
@@ -15,7 +16,6 @@ class NotificationService {
   NotificationService({required this.firebaseMessaging});
 
   void notificationInit() async {
-    getFirebaseToken();
     createAndroidNotifChannel();
     firebaseMessaging.setForegroundNotificationPresentationOptions(
         alert: true, badge: true, sound: true);
@@ -32,8 +32,8 @@ class NotificationService {
   }
 
   Future<String> getFirebaseToken() async {
-    await firebaseMessaging.deleteToken();
     final String? token = await firebaseMessaging.getToken();
+    log(token.toString(), name: 'fcm token');
     return token.toString();
   }
 
@@ -64,19 +64,31 @@ class NotificationService {
         InitializationSettings(
       android: initializationSettingsAndroid,
     );
-    await flutterLocalNotificationsPlugin.initialize(
-      initializationSettings,
-      onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,
-    );
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,
+        onDidReceiveBackgroundNotificationResponse:
+            onDidReceiveBackgroundNotificationResponse);
   }
 
   void onDidReceiveNotificationResponse(
       NotificationResponse notificationResponse) async {
-    log(notificationResponse.payload.toString(), name: 'Notification clicked');
+    log(notificationResponse.payload.toString(),
+        name: 'Notification clicked foreground');
     if (notificationResponse.payload != null) {
-      final notification = NotificationMessageModel.fromJson(
+      final notification = NotificationModel.fromJson(
           jsonDecode(notificationResponse.payload.toString()));
-      _navigateToDetailTask(notification);
+      _navigateToDetailTask(notification: notification);
+    }
+  }
+
+  void onDidReceiveBackgroundNotificationResponse(
+      NotificationResponse notificationResponse) async {
+    log(notificationResponse.payload.toString(),
+        name: 'Notification clicked background');
+    if (notificationResponse.payload != null) {
+      final notification = NotificationModel.fromJson(
+          jsonDecode(notificationResponse.payload.toString()));
+      _navigateToDetailTask(notification: notification, isBackground: true);
     }
   }
 
@@ -102,22 +114,41 @@ class NotificationService {
 
   void _handleBackgroundMessage(RemoteMessage message) {
     log('Notification clicked in background/terminated state');
+    log(message.data.toString(), name: 'bg remote message');
     if (message.data.isNotEmpty) {
-      final notification = NotificationMessageModel.fromJson(message.data);
-      _navigateToDetailTask(notification);
+      final notification = message.data['pagelink'];
+      _navigateToDetailTask(
+          isBackground: true, taskIdFromRemoteMessage: notification);
     }
   }
 
-  void _navigateToDetailTask(NotificationMessageModel notification) {
+  void _navigateToDetailTask(
+      {NotificationModel? notification,
+      bool isBackground = false,
+      String? taskIdFromRemoteMessage}) async {
     final prefs = Get.find<PrefsService>().prefs;
-    if (notification.type == "task") {
-      final taskId = notification.data?.id;
-      if (taskId != null) {
+
+    final taskId = notification?.data.pagelink.split('/').last;
+    final taskIdBg = taskIdFromRemoteMessage?.split('/').last;
+    if (taskId != '') {
+      if (isBackground) {
         navigatorKey.currentContext?.go(
             prefs.getString('role') == 'ADMIN' ? '/homeAdmin' : '/homeSales');
-        navigatorKey.currentContext?.push(
+        await navigatorKey.currentContext
+            ?.push(
+          '/detailTaskSales/$taskIdBg',
+        )
+            .then((_) {
+          Get.find<HomeController>().refreshTasks();
+        });
+      } else {
+        await navigatorKey.currentContext
+            ?.push(
           '/detailTaskSales/$taskId',
-        );
+        )
+            .then((_) {
+          Get.find<HomeController>().refreshTasks();
+        });
       }
     }
   }

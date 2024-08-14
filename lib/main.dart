@@ -1,9 +1,9 @@
 import 'package:distributor_app/backend/firebase/firebase_notification_service.dart';
 import 'package:distributor_app/firebase_options.dart';
+import 'package:distributor_app/utils/firebase_messaging_instance.dart';
 import 'package:distributor_app/utils/helper.dart';
 import 'package:distributor_app/utils/prefs.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -26,9 +26,11 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await Get.putAsync(() => FirebaseMessagingInstance().init());
   await FlutterFlowTheme.initialize();
 
-  final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+  final firebaseMessaging =
+      Get.find<FirebaseMessagingInstance>().firebaseMessaging;
   final NotificationService notificationService =
       NotificationService(firebaseMessaging: firebaseMessaging);
 

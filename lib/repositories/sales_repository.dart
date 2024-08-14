@@ -24,7 +24,12 @@ final class SalesRepository {
     try {
       final res = await http.get(endpoint, headers: {
         'Authorization': 'Bearer $token',
-      });
+      }).timeout(
+        const Duration(seconds: 10),
+        onTimeout: () {
+          throw 'timeout exception';
+        },
+      );
       log(res.body);
       if (res.statusCode == 200) {
         return Either.success(salesModelFromJson(res.body));

@@ -1,49 +1,41 @@
-class NotificationMessageModel {
-  final String? type;
-  final NotificationData? data;
+import 'dart:convert';
 
-  NotificationMessageModel({this.type, this.data});
+NotificationModel notificationModelFromJson(String str) =>
+    NotificationModel.fromJson(json.decode(str));
 
-  // Factory constructor to create a NotificationMessageModel from a JSON map
-  factory NotificationMessageModel.fromJson(Map<String, dynamic> json) {
-    return NotificationMessageModel(
-      type: json['type'],
-      data:
-          json['data'] != null ? NotificationData.fromJson(json['data']) : null,
-    );
-  }
+String notificationModelToJson(NotificationModel data) =>
+    json.encode(data.toJson());
 
-  // Method to convert NotificationMessageModel to JSON map
-  Map<String, dynamic> toJson() {
-    return {
-      'type': type,
-      'data': data?.toJson(),
-    };
-  }
+class NotificationModel {
+  final NotificationDatum data;
+
+  NotificationModel({
+    required this.data,
+  });
+
+  factory NotificationModel.fromJson(Map<String, dynamic> json) =>
+      NotificationModel(
+        data: NotificationDatum.fromJson(json["data"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "data": data.toJson(),
+      };
 }
 
-class NotificationData {
-  final int? id;
-  final String? title;
-  final String? description;
+class NotificationDatum {
+  final String pagelink;
 
-  NotificationData({this.id, this.title, this.description});
+  NotificationDatum({
+    required this.pagelink,
+  });
 
-  // Factory constructor to create NotificationData from a JSON map
-  factory NotificationData.fromJson(Map<String, dynamic> json) {
-    return NotificationData(
-      id: json['id'],
-      title: json['title'],
-      description: json['description'],
-    );
-  }
+  factory NotificationDatum.fromJson(Map<String, dynamic> json) =>
+      NotificationDatum(
+        pagelink: json["pagelink"],
+      );
 
-  // Method to convert NotificationData to JSON map
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'title': title,
-      'description': description,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+        "pagelink": pagelink,
+      };
 }

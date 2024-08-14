@@ -26,7 +26,12 @@ final class ProofRepository {
     try {
       final res = await http.get(endpoint, headers: {
         'Authorization': 'Bearer $token',
-      });
+      }).timeout(
+        const Duration(seconds: 10),
+        onTimeout: () {
+          throw 'timeout exception';
+        },
+      );
       log(res.body);
       if (res.statusCode == 200) {
         return Either.success(proofListModelFromJson(res.body));
@@ -54,7 +59,12 @@ final class ProofRepository {
           }),
           headers: {
             'Authorization': 'Bearer $token',
-          });
+          }).timeout(
+        const Duration(seconds: 10),
+        onTimeout: () {
+          throw 'timeout exception';
+        },
+      );
       log(res.body);
       if (res.statusCode == 200) {
         return Either.success(generalModelFromJson(res.body));
@@ -78,7 +88,12 @@ final class ProofRepository {
           }),
           headers: {
             'Authorization': 'Bearer $token',
-          });
+          }).timeout(
+        const Duration(seconds: 10),
+        onTimeout: () {
+          throw 'timeout exception';
+        },
+      );
       log(res.body);
       if (res.statusCode == 200) {
         return Either.success(generalModelFromJson(res.body));
@@ -96,7 +111,12 @@ final class ProofRepository {
     try {
       final res = await http.delete(endpoint, headers: {
         'Authorization': 'Bearer $token',
-      });
+      }).timeout(
+        const Duration(seconds: 10),
+        onTimeout: () {
+          throw 'timeout exception';
+        },
+      );
       log(res.body);
       if (res.statusCode == 200) {
         return Either.success(generalModelFromJson(res.body));

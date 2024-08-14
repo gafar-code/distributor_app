@@ -23,7 +23,12 @@ final class TaskRepository {
     try {
       final res = await http.get(endpoint, headers: {
         'Authorization': 'Bearer $token',
-      });
+      }).timeout(
+        const Duration(seconds: 10),
+        onTimeout: () {
+          throw 'timeout exception';
+        },
+      );
       log(res.body);
       if (res.statusCode == 200) {
         return Either.success(taskListModelFromJson(res.body));
@@ -41,7 +46,12 @@ final class TaskRepository {
     try {
       final res = await http.get(endpoint, headers: {
         'Authorization': 'Bearer $token',
-      });
+      }).timeout(
+        const Duration(seconds: 10),
+        onTimeout: () {
+          throw 'timeout exception';
+        },
+      );
       log(res.body);
       if (res.statusCode == 200) {
         return Either.success(taskModelFromJson(res.body));
@@ -58,15 +68,22 @@ final class TaskRepository {
     final endpoint = Uri.parse('${AppConstants.apiBaseUrl}/task');
     final token = prefs.getString('token');
     try {
-      final res = await http.post(endpoint,
-          headers: {
-            'Authorization': 'Bearer $token',
-          },
-          body: jsonEncode({
-            'title': params.title,
-            'body': params.description,
-            'sales_id': params.salesId,
-          }));
+      final res = await http
+          .post(endpoint,
+              headers: {
+                'Authorization': 'Bearer $token',
+              },
+              body: jsonEncode({
+                'title': params.title,
+                'body': params.description,
+                'sales_id': params.salesId,
+              }))
+          .timeout(
+        const Duration(seconds: 10),
+        onTimeout: () {
+          throw 'timeout exception';
+        },
+      );
       log(res.body);
       if (res.statusCode == 200) {
         return Either.success(generalModelFromJson(res.body));
@@ -84,17 +101,24 @@ final class TaskRepository {
         Uri.parse('${AppConstants.apiBaseUrl}/task/${params.taskId}');
     final token = prefs.getString('token');
     try {
-      final res = await http.put(endpoint,
-          headers: {
-            'Authorization': 'Bearer $token',
-          },
-          body: jsonEncode({
-            'title': params.title,
-            'body': params.description,
-            'sales_id': params.salesId,
-            'status': params.status,
-            'sales_name': params.salesName
-          }));
+      final res = await http
+          .put(endpoint,
+              headers: {
+                'Authorization': 'Bearer $token',
+              },
+              body: jsonEncode({
+                'title': params.title,
+                'body': params.description,
+                'sales_id': params.salesId,
+                'status': params.status,
+                'sales_name': params.salesName
+              }))
+          .timeout(
+        const Duration(seconds: 10),
+        onTimeout: () {
+          throw 'timeout exception';
+        },
+      );
       log(res.body);
       if (res.statusCode == 200) {
         return Either.success(generalModelFromJson(res.body));
@@ -112,7 +136,12 @@ final class TaskRepository {
     try {
       final res = await http.delete(endpoint, headers: {
         'Authorization': 'Bearer $token',
-      });
+      }).timeout(
+        const Duration(seconds: 10),
+        onTimeout: () {
+          throw 'timeout exception';
+        },
+      );
       log(res.body);
       if (res.statusCode == 200) {
         return Either.success(generalModelFromJson(res.body));

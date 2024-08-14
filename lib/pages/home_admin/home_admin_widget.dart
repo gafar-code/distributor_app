@@ -1,11 +1,10 @@
 import 'package:distributor_app/controllers/home_controller.dart';
 import 'package:distributor_app/models/task_model.dart';
-import 'package:distributor_app/utils/helper.dart';
-import 'package:distributor_app/utils/prefs.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+import '../../controllers/logout_controller.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -22,10 +21,9 @@ class HomeAdminWidget extends StatefulWidget {
 
 class _HomeAdminWidgetState extends State<HomeAdminWidget> {
   final controller = Get.put(HomeController());
+  final logoutController = Get.put(LogoutController());
   final refreshController = RefreshController();
   late HomeAdminModel _model;
-
-  final prefs = Get.find<PrefsService>().prefs;
 
   void onRefresh() {
     controller.pagingController.refresh();
@@ -246,39 +244,34 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
           Padding(
             padding:
                 const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 0.0),
-            child: InkWell(
-              onTap: () async {
-                Navigator.pop(context);
-              },
-              child: ListTile(
-                onTap: () async {
-                  await prefs.clear();
-                  clearControllers();
-                  context.go('/loginPage', extra: {'clearStack': true});
-                },
-                title: Text(
-                  'Keluar',
-                  style: FlutterFlowTheme.of(context).titleLarge.override(
-                        fontFamily: 'Outfit',
-                        letterSpacing: 0.0,
-                      ),
-                ),
-                subtitle: Text(
-                  'keluar akun',
-                  style: FlutterFlowTheme.of(context).labelMedium.override(
-                        fontFamily: 'Readex Pro',
-                        letterSpacing: 0.0,
-                      ),
-                ),
-                trailing: Icon(
-                  Icons.exit_to_app,
-                  color: FlutterFlowTheme.of(context).secondaryText,
-                  size: 20.0,
-                ),
-                tileColor: FlutterFlowTheme.of(context).secondaryBackground,
-                dense: false,
-              ),
-            ),
+            child: Obx(() => logoutController.isLoading.isTrue
+                ? const Center(child: CircularProgressIndicator())
+                : ListTile(
+                    onTap: () async {
+                      logoutController.logout(context);
+                    },
+                    title: Text(
+                      'Keluar',
+                      style: FlutterFlowTheme.of(context).titleLarge.override(
+                            fontFamily: 'Outfit',
+                            letterSpacing: 0.0,
+                          ),
+                    ),
+                    subtitle: Text(
+                      'keluar akun',
+                      style: FlutterFlowTheme.of(context).labelMedium.override(
+                            fontFamily: 'Readex Pro',
+                            letterSpacing: 0.0,
+                          ),
+                    ),
+                    trailing: Icon(
+                      Icons.exit_to_app,
+                      color: FlutterFlowTheme.of(context).secondaryText,
+                      size: 20.0,
+                    ),
+                    tileColor: FlutterFlowTheme.of(context).secondaryBackground,
+                    dense: false,
+                  )),
           ),
         ],
       ),

@@ -1,22 +1,16 @@
 import 'package:distributor_app/flutter_flow/flutter_flow_util.dart';
 import 'package:distributor_app/repositories/auth_repository.dart';
 import 'package:distributor_app/utils/helper.dart';
+import 'package:distributor_app/utils/prefs.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 final class LoginController extends GetxController {
   final emailC = TextEditingController();
   final passwordC = TextEditingController();
   RxBool isLoading = false.obs;
   final repo = AuthRepository();
-  late SharedPreferences prefs;
-
-  @override
-  void onInit() async {
-    prefs = await SharedPreferences.getInstance();
-    super.onInit();
-  }
+  final prefs = Get.find<PrefsService>().prefs;
 
   @override
   void dispose() {

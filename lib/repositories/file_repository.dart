@@ -25,12 +25,19 @@ final class UploadFileRepository {
         "name": image.path.split('/').last,
       });
 
-      final response = await dio.Dio().post(
+      final response = await dio.Dio()
+          .post(
         endpoint,
         data: formData,
         options: dio.Options(headers: {
           'Authorization': 'Bearer $token',
         }),
+      )
+          .timeout(
+        const Duration(seconds: 10),
+        onTimeout: () {
+          throw 'timeout exception';
+        },
       );
       log(jsonEncode(response.data), name: 'res upload image');
       return Either.success(
@@ -52,12 +59,19 @@ final class UploadFileRepository {
         "image": await dio.MultipartFile.fromFile(newImage.path),
         "name": newImage.path.split('/').last,
       });
-      final response = await dio.Dio().put(
+      final response = await dio.Dio()
+          .put(
         endpoint,
         data: formData,
         options: dio.Options(headers: {
           'Authorization': 'Bearer $token',
         }),
+      )
+          .timeout(
+        const Duration(seconds: 10),
+        onTimeout: () {
+          throw 'timeout exception';
+        },
       );
       return Either.success(
           uploadImageModelFromJson(jsonEncode(response.data)));
@@ -72,11 +86,18 @@ final class UploadFileRepository {
     final endpoint = '${AppConstants.apiBaseUrl}/file/image/$fileName';
     final token = prefs.getString('token');
     try {
-      final response = await dio.Dio().delete(
+      final response = await dio.Dio()
+          .delete(
         endpoint,
         options: dio.Options(headers: {
           'Authorization': 'Bearer $token',
         }),
+      )
+          .timeout(
+        const Duration(seconds: 10),
+        onTimeout: () {
+          throw 'timeout exception';
+        },
       );
 
       if (response.statusCode == 200) {
