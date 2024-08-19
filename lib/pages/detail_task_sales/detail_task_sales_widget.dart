@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/detail_task_controller.dart';
@@ -85,6 +86,7 @@ class _DetailTaskSalesWidgetState extends State<DetailTaskSalesWidget> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Obx(() {
+                final userData = detailTaskController.data.value?.data.user;
                 return detailTaskController.isLoading.isTrue
                     ? const Padding(
                         padding: EdgeInsets.only(top: 16),
@@ -144,8 +146,8 @@ class _DetailTaskSalesWidgetState extends State<DetailTaskSalesWidget> {
                                           padding: const EdgeInsetsDirectional
                                               .fromSTEB(4.0, 4.0, 4.0, 4.0),
                                           child: Text(
-                                            detailTaskController
-                                                    .data.value?.status ??
+                                            detailTaskController.data.value
+                                                    ?.data.data.status ??
                                                 'unknown',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
@@ -197,7 +199,8 @@ class _DetailTaskSalesWidgetState extends State<DetailTaskSalesWidget> {
                                     alignment:
                                         const AlignmentDirectional(-1.0, 0.0),
                                     child: Text(
-                                      detailTaskController.data.value?.title ??
+                                      detailTaskController
+                                              .data.value?.data.data.title ??
                                           'unknown',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
@@ -245,7 +248,8 @@ class _DetailTaskSalesWidgetState extends State<DetailTaskSalesWidget> {
                                     alignment:
                                         const AlignmentDirectional(-1.0, 0.0),
                                     child: Text(
-                                      detailTaskController.data.value?.body ??
+                                      detailTaskController
+                                              .data.value?.data.data.body ??
                                           'unknown',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
@@ -294,14 +298,250 @@ class _DetailTaskSalesWidgetState extends State<DetailTaskSalesWidget> {
                                         const AlignmentDirectional(-1.0, 0.0),
                                     child: Text(
                                       DateFormat('dd, MMM yyyy').format(
-                                          detailTaskController
-                                                  .data.value?.createdAt ??
+                                          detailTaskController.data.value?.data
+                                                  .data.createdAt ??
                                               DateTime.now()),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
                                             fontFamily: 'Readex Pro',
                                             letterSpacing: 0.0,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                12.0, 0.0, 0.0, 0.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Align(
+                                    alignment:
+                                        const AlignmentDirectional(-1.0, 0.0),
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 12.0, 0.0),
+                                      child: Text(
+                                        'Selesai pada',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              letterSpacing: 0.0,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Align(
+                                    alignment:
+                                        const AlignmentDirectional(-1.0, 0.0),
+                                    child: Text(
+                                      DateFormat('dd, MMM yyyy').format(
+                                          detailTaskController.data.value?.data
+                                                  .data.updatedAt ??
+                                              DateTime.now()),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Readex Pro',
+                                            letterSpacing: 0.0,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 24.0, 0.0, 0.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Align(
+                                  alignment:
+                                      const AlignmentDirectional(-1.0, 0.0),
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            12.0, 0.0, 0.0, 0.0),
+                                    child: Text(
+                                      'PIC',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Readex Pro',
+                                            fontSize: 18.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                12.0, 6.0, 0.0, 0.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Align(
+                                    alignment:
+                                        const AlignmentDirectional(-1.0, 0.0),
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 12.0, 0.0),
+                                      child: Text(
+                                        'Nama',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              letterSpacing: 0.0,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Align(
+                                    alignment:
+                                        const AlignmentDirectional(-1.0, 0.0),
+                                    child: Text(
+                                      userData?.name ?? '-',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Readex Pro',
+                                            letterSpacing: 0.0,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                12.0, 0.0, 0.0, 0.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Align(
+                                    alignment:
+                                        const AlignmentDirectional(-1.0, 0.0),
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 12.0, 0.0),
+                                      child: Text(
+                                        'No Hp',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              letterSpacing: 0.0,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Align(
+                                    alignment:
+                                        const AlignmentDirectional(-1.0, 0.0),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Clipboard.setData(ClipboardData(
+                                            text: userData?.phone ?? ''));
+                                      },
+                                      child: Text(
+                                        userData?.phone ?? '-',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              letterSpacing: 0.0,
+                                              decoration:
+                                                  TextDecoration.underline,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                12.0, 0.0, 0.0, 0.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Align(
+                                    alignment:
+                                        const AlignmentDirectional(-1.0, 0.0),
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 12.0, 0.0),
+                                      child: Text(
+                                        'Gender',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              letterSpacing: 0.0,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Align(
+                                    alignment:
+                                        const AlignmentDirectional(-1.0, 0.0),
+                                    child: Text(
+                                      userData?.gender ?? '-',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Readex Pro',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            letterSpacing: 0.0,
+                                            decoration:
+                                                TextDecoration.underline,
                                           ),
                                     ),
                                   ),

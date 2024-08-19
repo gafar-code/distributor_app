@@ -29,6 +29,7 @@ final class LoginController extends GetxController {
       }, success: (s) async {
         prefs.setString('token', s.data.token);
         prefs.setString('role', s.data.user.role);
+        prefs.setInt('userId', s.data.user.id);
         emailC.clear();
         passwordC.clear();
         context.go(s.data.user.role == 'ADMIN' ? '/homeAdmin' : '/homeSales',

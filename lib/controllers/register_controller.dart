@@ -1,4 +1,3 @@
-import 'package:distributor_app/flutter_flow/flutter_flow_util.dart';
 import 'package:distributor_app/repositories/auth_repository.dart';
 import 'package:distributor_app/utils/prefs.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +8,7 @@ import '../utils/helper.dart';
 final class RegisterController extends GetxController {
   final nameC = TextEditingController();
   final emailC = TextEditingController();
+  final phoneC = TextEditingController();
   final passwordC = TextEditingController();
   final confirmPasswordC = TextEditingController();
   RxBool isLoading = false.obs;
@@ -20,24 +20,24 @@ final class RegisterController extends GetxController {
     emailC.clear();
     passwordC.clear();
     confirmPasswordC.clear();
+    phoneC.clear();
   }
 
-  void register(BuildContext context, {required String role}) async {
+  void register(BuildContext context,
+      {required String role, required String gender}) async {
     try {
       isLoading.value = true;
       final result = await repo.register(RegisterParams(
+          gender: gender,
           role: role,
           name: nameC.text,
           email: emailC.text,
+          phone: phoneC.text,
           password: confirmPasswordC.text));
       result.when(error: (e) {
         showCustomSnackbar(e.message);
       }, success: (s) async {
-        showCustomSnackbar('Registrasi berhasil');
-        prefs.setString('token', s.data.token);
-        prefs.setString('role', s.data.user.role);
-        context.go(s.data.user.role == 'ADMIN' ? '/homeAdmin' : '/homeSales',
-            extra: {'clearStack': true});
+        showCustomSnackbar('Tambah Pengguna berhasil');
         clearFields();
       });
     } finally {

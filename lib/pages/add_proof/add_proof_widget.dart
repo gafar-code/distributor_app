@@ -311,9 +311,109 @@ class _AddProofWidgetState extends State<AddProofWidget> {
         ),
         addProofController.getLocationLoading.isTrue
             ? const Text('Mengambil data lokasi....')
-            : Text(
-                'Lokasi : ${addProofController.address}',
-                style: const TextStyle(fontWeight: FontWeight.w600),
+            : Column(
+                children: [
+                  Align(
+                    alignment: const AlignmentDirectional(0.0, 0.0),
+                    child: Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          12.0, 12.0, 12.0, 0.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Align(
+                              alignment: const AlignmentDirectional(1.0, -1.0),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 12.0, 0.0),
+                                child: Text(
+                                  'Koordinat :',
+                                  textAlign: TextAlign.end,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Readex Pro',
+                                        letterSpacing: 0.0,
+                                      ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  1.0, 0.0, 0.0, 0.0),
+                              child: Text(
+                                '${addProofController.lat}, ${addProofController.lng}',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Readex Pro',
+                                      letterSpacing: 0.0,
+                                    ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: const AlignmentDirectional(0.0, 0.0),
+                    child: Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          12.0, 0.0, 12.0, 0.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Align(
+                              alignment: const AlignmentDirectional(1.0, -1.0),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 12.0, 0.0),
+                                child: Text(
+                                  'Alamat :',
+                                  textAlign: TextAlign.end,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Readex Pro',
+                                        letterSpacing: 0.0,
+                                      ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  1.0, 0.0, 0.0, 0.0),
+                              child: Text(
+                                '${addProofController.address}',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Readex Pro',
+                                      letterSpacing: 0.0,
+                                    ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
         const SizedBox(
           height: 15,

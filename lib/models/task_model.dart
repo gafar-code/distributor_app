@@ -1,20 +1,34 @@
 import 'dart:convert';
 
+import 'package:distributor_app/models/login_model.dart';
+
 TaskListModel taskListModelFromJson(String str) =>
     TaskListModel.fromJson(json.decode(str));
+
+TaskWrapperModel taskWrapperModelFromJson(String str) =>
+    TaskWrapperModel.fromJson(json.decode(str));
 
 TaskModel taskModelFromJson(String str) => TaskModel.fromJson(json.decode(str));
 
 class TaskModel {
-  final Task data;
+  final TaskWrapperModel data;
 
-  TaskModel({
-    required this.data,
-  });
+  TaskModel({required this.data});
 
   factory TaskModel.fromJson(Map<String, dynamic> json) => TaskModel(
-        data: Task.fromJson(json["data"]),
+        data: TaskWrapperModel.fromJson(json["data"]),
       );
+}
+
+class TaskWrapperModel {
+  final Task data;
+  final User user;
+
+  TaskWrapperModel({required this.data, required this.user});
+
+  factory TaskWrapperModel.fromJson(Map<String, dynamic> json) =>
+      TaskWrapperModel(
+          data: Task.fromJson(json["task"]), user: User.fromJson(json['user']));
 }
 
 class TaskListModel {

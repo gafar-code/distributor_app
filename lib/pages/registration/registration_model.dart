@@ -7,6 +7,8 @@ class RegistrationModel extends FlutterFlowModel<RegistrationWidget> {
   ///  State fields for stateful widgets in this page.
   String? dropDownValue1;
   FormFieldController<String>? dropDownValueController1;
+  String? dropDownValue2;
+  FormFieldController<String>? dropDownValueController2;
 
   final formKey = GlobalKey<FormState>();
   // State field(s) for TextField widget.

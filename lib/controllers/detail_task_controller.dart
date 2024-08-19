@@ -7,7 +7,7 @@ import '../utils/helper.dart';
 final class DetailTaskController extends GetxController {
   RxBool isLoading = false.obs;
   final repo = TaskRepository();
-  Rxn<Task> data = Rxn<Task>();
+  Rxn<TaskModel> data = Rxn<TaskModel>();
 
   void getDetailTask(int id) async {
     try {
@@ -16,7 +16,7 @@ final class DetailTaskController extends GetxController {
       result.when(error: (e) async {
         showCustomSnackbar(e.message);
       }, success: (s) async {
-        data.value = s.data;
+        data.value = s;
       });
     } finally {
       isLoading.value = false;

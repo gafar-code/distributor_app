@@ -37,9 +37,13 @@ class User {
   final int id;
   final String name;
   final String role;
+  final String phone;
+  final String gender;
   final DateTime updatedAt;
 
   User({
+    required this.phone,
+    required this.gender,
     required this.createdAt,
     required this.email,
     required this.fcmToken,
@@ -56,6 +60,8 @@ class User {
         id: json["id"],
         name: json["name"],
         role: json["role"],
+        gender: json['gender'],
+        phone: json['phone'],
         updatedAt: DateTime.parse(json["updated_at"]),
       );
 }

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
+import '../../pages/profile/profile_widget.dart';
 import '/backend/schema/structs/index.dart';
 
 import '/auth/custom_auth/custom_auth_user_provider.dart';
@@ -172,6 +173,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'Splash',
           path: '/splash',
           builder: (context, params) => const SplashWidget(),
+        ),
+        FFRoute(
+          name: 'Profile',
+          path: '/profile',
+          builder: (context, params) => const ProfileWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

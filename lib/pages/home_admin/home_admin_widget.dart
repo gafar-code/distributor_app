@@ -5,6 +5,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../controllers/logout_controller.dart';
+import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -61,6 +62,30 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
         ),
         centerTitle: false,
         elevation: 2.0,
+        actions: [
+          Align(
+            alignment: const AlignmentDirectional(0.0, 0.0),
+            child: Padding(
+              padding:
+                  const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
+              child: FlutterFlowIconButton(
+                borderColor: Colors.white,
+                borderRadius: 20.0,
+                borderWidth: 1.0,
+                buttonSize: 40.0,
+                fillColor: FlutterFlowTheme.of(context).accent1,
+                icon: Icon(
+                  Icons.person_rounded,
+                  color: FlutterFlowTheme.of(context).primaryBackground,
+                  size: 24.0,
+                ),
+                onPressed: () async {
+                  context.pushNamed('Profile');
+                },
+              ),
+            ),
+          ),
+        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,8 +148,7 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
           const SizedBox(
             height: 10,
           ),
-          SizedBox(
-            height: MediaQuery.sizeOf(context).height / 2.1,
+          Expanded(
             child: SmartRefresher(
               controller: refreshController,
               onRefresh: onRefresh,
@@ -196,82 +220,6 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
                     },
                   )),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(12.0, 28.0, 0.0, 0.0),
-            child: Text(
-              'Akun',
-              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                    fontFamily: 'Readex Pro',
-                    fontSize: 24.0,
-                    letterSpacing: 0.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-          ),
-          Padding(
-            padding:
-                const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 0.0),
-            child: InkWell(
-              onTap: () async {
-                context.pushNamed('ChangePass');
-              },
-              child: ListTile(
-                title: Text(
-                  'Keamanan',
-                  style: FlutterFlowTheme.of(context).titleLarge.override(
-                        fontFamily: 'Outfit',
-                        letterSpacing: 0.0,
-                      ),
-                ),
-                subtitle: Text(
-                  'ubah sandi',
-                  style: FlutterFlowTheme.of(context).labelMedium.override(
-                        fontFamily: 'Readex Pro',
-                        letterSpacing: 0.0,
-                      ),
-                ),
-                trailing: Icon(
-                  Icons.password,
-                  color: FlutterFlowTheme.of(context).secondaryText,
-                  size: 20.0,
-                ),
-                tileColor: FlutterFlowTheme.of(context).secondaryBackground,
-                dense: false,
-              ),
-            ),
-          ),
-          Padding(
-            padding:
-                const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 0.0),
-            child: Obx(() => logoutController.isLoading.isTrue
-                ? const Center(child: CircularProgressIndicator())
-                : ListTile(
-                    onTap: () async {
-                      logoutController.logout(context);
-                    },
-                    title: Text(
-                      'Keluar',
-                      style: FlutterFlowTheme.of(context).titleLarge.override(
-                            fontFamily: 'Outfit',
-                            letterSpacing: 0.0,
-                          ),
-                    ),
-                    subtitle: Text(
-                      'keluar akun',
-                      style: FlutterFlowTheme.of(context).labelMedium.override(
-                            fontFamily: 'Readex Pro',
-                            letterSpacing: 0.0,
-                          ),
-                    ),
-                    trailing: Icon(
-                      Icons.exit_to_app,
-                      color: FlutterFlowTheme.of(context).secondaryText,
-                      size: 20.0,
-                    ),
-                    tileColor: FlutterFlowTheme.of(context).secondaryBackground,
-                    dense: false,
-                  )),
           ),
         ],
       ),

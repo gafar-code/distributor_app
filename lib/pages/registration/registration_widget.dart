@@ -47,6 +47,7 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
     registerController.emailC.clear();
     registerController.passwordC.clear();
     registerController.confirmPasswordC.clear();
+    registerController.phoneC.clear();
   }
 
   @override
@@ -69,7 +70,7 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
           backgroundColor: FlutterFlowTheme.of(context).primary,
           foregroundColor: Colors.white,
           title: Text(
-            'Pendaftaran',
+            'Tambah Pengguna',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
                   fontFamily: 'Outfit',
                   color: Colors.white,
@@ -189,6 +190,49 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
                 ),
                 Padding(
                   padding:
+                      const EdgeInsetsDirectional.fromSTEB(8.0, 24.0, 8.0, 0.0),
+                  child: FlutterFlowDropDown<String>(
+                    controller: _model.dropDownValueController2 ??=
+                        FormFieldController<String>(null),
+                    options: const ['Laki-laki', 'Perempuan'],
+                    onChanged: (val) =>
+                        setState(() => _model.dropDownValue2 = val),
+                    width: 199.0,
+                    height: 56.0,
+                    searchHintTextStyle:
+                        FlutterFlowTheme.of(context).labelMedium.override(
+                              fontFamily: 'Readex Pro',
+                              letterSpacing: 0.0,
+                            ),
+                    searchTextStyle:
+                        FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Readex Pro',
+                              letterSpacing: 0.0,
+                            ),
+                    textStyle: FlutterFlowTheme.of(context).bodyMedium.override(
+                          fontFamily: 'Readex Pro',
+                          letterSpacing: 0.0,
+                        ),
+                    hintText: 'Pilih Gender',
+                    icon: Icon(
+                      Icons.keyboard_arrow_down_rounded,
+                      color: FlutterFlowTheme.of(context).secondaryText,
+                      size: 24.0,
+                    ),
+                    fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+                    elevation: 2.0,
+                    borderColor: FlutterFlowTheme.of(context).alternate,
+                    borderWidth: 2.0,
+                    borderRadius: 8.0,
+                    margin: const EdgeInsetsDirectional.fromSTEB(
+                        16.0, 4.0, 16.0, 4.0),
+                    hidesUnderline: true,
+                    isOverButton: true,
+                    isMultiSelect: false,
+                  ),
+                ),
+                Padding(
+                  padding:
                       const EdgeInsetsDirectional.fromSTEB(8.0, 18.0, 8.0, 0.0),
                   child: TextFormField(
                     controller: registerController.emailC,
@@ -248,6 +292,69 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
                       }
                       if (!RegExp(kTextValidatorEmailRegex).hasMatch(val)) {
                         return 'Email tidak valid';
+                      }
+
+                      return null;
+                    },
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(8.0, 18.0, 8.0, 0.0),
+                  child: TextFormField(
+                    controller: registerController.phoneC,
+                    autofocus: true,
+                    textInputAction: TextInputAction.next,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      labelText: 'Phone',
+                      labelStyle:
+                          FlutterFlowTheme.of(context).labelMedium.override(
+                                fontFamily: 'Readex Pro',
+                                letterSpacing: 0.0,
+                              ),
+                      hintStyle:
+                          FlutterFlowTheme.of(context).labelMedium.override(
+                                fontFamily: 'Readex Pro',
+                                letterSpacing: 0.0,
+                              ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).alternate,
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).primary,
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).error,
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).error,
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                          fontFamily: 'Readex Pro',
+                          letterSpacing: 0.0,
+                        ),
+                    keyboardType: TextInputType.phone,
+                    validator: (val) {
+                      if (val!.isEmpty) {
+                        return 'Wajib diisi';
                       }
 
                       return null;
@@ -429,14 +536,27 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
                                         'Sales'
                                     ? 'SALES'
                                     : 'ADMIN';
+                            final gender =
+                                _model.dropDownValueController2!.value ==
+                                        'Laki-laki'
+                                    ? 'MALE'
+                                    : 'FEMALE';
                             if (_model.formKey.currentState!.validate()) {
                               if (_model.dropDownValueController1?.value ==
-                                  null) {
+                                      null ||
+                                  _model.dropDownValueController2?.value ==
+                                      null) {
                                 showCustomSnackbar(
-                                    'Pilih role terlebih dahulu');
+                                    'Lengkapi form terlebih dahulu');
                               } else {
                                 registerController.register(context,
-                                    role: role);
+                                    gender: gender, role: role);
+                                setState(() {
+                                  _model.dropDownValueController1?.value = null;
+                                  _model.dropDownValueController2?.value = null;
+                                  _model.dropDownValue1 = null;
+                                  _model.dropDownValue2 = null;
+                                });
                               }
                             }
                           },
@@ -464,43 +584,6 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
                           ),
                         ),
                       )),
-                Align(
-                  alignment: const AlignmentDirectional(0.0, 0.0),
-                  child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        0.0, 24.0, 0.0, 0.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Sudah memiliki akun? ',
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Readex Pro',
-                                    letterSpacing: 0.0,
-                                  ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            clearFields();
-                            context.pop();
-                          },
-                          child: Text(
-                            'Masuk',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Readex Pro',
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
               ],
             ),
           ),

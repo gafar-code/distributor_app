@@ -62,6 +62,8 @@ final class AuthRepository {
                 'password': params.password,
                 'role': params.role,
                 'name': params.name,
+                'phone': params.phone,
+                'gender': params.gender,
                 'fcm_token': await notificationService.getFirebaseToken()
               }))
           .timeout(
@@ -161,10 +163,14 @@ final class RegisterParams {
   final String name;
   final String email;
   final String password;
+  final String gender;
+  final String phone;
 
   RegisterParams(
       {required this.role,
       required this.name,
+      required this.gender,
+      required this.phone,
       required this.email,
       required this.password});
 }
