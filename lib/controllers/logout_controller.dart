@@ -17,6 +17,7 @@ final class LogoutController extends GetxController {
         showCustomSnackbar(e.message);
       }, success: (s) async {
         clearControllers();
+        await prefs.clear();
         navigatorKey.currentContext
             ?.go('/loginPage', extra: {'clearStack': true});
       });

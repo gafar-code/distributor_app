@@ -37,9 +37,10 @@ final class UserRepository {
       } else {
         if (errorModelFromJson(res.body).code == 401) {
           clearControllers();
-          prefs.clear();
+          await prefs.clear();
           navigatorKey.currentContext
               ?.goNamed('LoginPage', extra: {'clearStack': true});
+          return Either.error(Failure('token invalid, silakan login ulang'));
         }
         return Either.error(Failure(errorModelFromJson(res.body).message));
       }
@@ -64,6 +65,7 @@ final class UserRepository {
                 if (params.email != null) 'email': params.email,
                 if (params.gender != null) 'gender': params.gender,
                 if (params.phone != null) 'phone': params.phone,
+                'role': prefs.getString('role')
               }))
           .timeout(
         const Duration(seconds: 10),

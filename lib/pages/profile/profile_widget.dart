@@ -406,28 +406,35 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   onTap: () async {
                     context.pushNamed('Registration');
                   },
-                  child: ListTile(
-                    title: Text(
-                      'Pengguna',
-                      style: FlutterFlowTheme.of(context).titleLarge.override(
-                            fontFamily: 'Outfit',
-                            letterSpacing: 0.0,
-                          ),
+                  child: Card(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero,
                     ),
-                    subtitle: Text(
-                      'Tambah pengguna',
-                      style: FlutterFlowTheme.of(context).labelMedium.override(
-                            fontFamily: 'Readex Pro',
-                            letterSpacing: 0.0,
-                          ),
+                    elevation: 0,
+                    color: FlutterFlowTheme.of(context).secondaryBackground,
+                    child: ListTile(
+                      title: Text(
+                        'Pengguna',
+                        style: FlutterFlowTheme.of(context).titleLarge.override(
+                              fontFamily: 'Outfit',
+                              letterSpacing: 0.0,
+                            ),
+                      ),
+                      subtitle: Text(
+                        'Tambah pengguna',
+                        style:
+                            FlutterFlowTheme.of(context).labelMedium.override(
+                                  fontFamily: 'Readex Pro',
+                                  letterSpacing: 0.0,
+                                ),
+                      ),
+                      trailing: Icon(
+                        Icons.person_add_alt_rounded,
+                        color: FlutterFlowTheme.of(context).secondaryText,
+                        size: 20.0,
+                      ),
+                      dense: false,
                     ),
-                    trailing: Icon(
-                      Icons.person_add_alt_rounded,
-                      color: FlutterFlowTheme.of(context).secondaryText,
-                      size: 20.0,
-                    ),
-                    tileColor: FlutterFlowTheme.of(context).secondaryBackground,
-                    dense: false,
                   ),
                 ),
               ),
@@ -442,28 +449,34 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 onTap: () async {
                   context.pushNamed('ChangePass');
                 },
-                child: ListTile(
-                  title: Text(
-                    'Keamanan',
-                    style: FlutterFlowTheme.of(context).titleLarge.override(
-                          fontFamily: 'Outfit',
-                          letterSpacing: 0.0,
-                        ),
+                child: Card(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.zero,
                   ),
-                  subtitle: Text(
-                    'ubah sandi',
-                    style: FlutterFlowTheme.of(context).labelMedium.override(
-                          fontFamily: 'Readex Pro',
-                          letterSpacing: 0.0,
-                        ),
+                  elevation: 0,
+                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                  child: ListTile(
+                    title: Text(
+                      'Keamanan',
+                      style: FlutterFlowTheme.of(context).titleLarge.override(
+                            fontFamily: 'Outfit',
+                            letterSpacing: 0.0,
+                          ),
+                    ),
+                    subtitle: Text(
+                      'ubah sandi',
+                      style: FlutterFlowTheme.of(context).labelMedium.override(
+                            fontFamily: 'Readex Pro',
+                            letterSpacing: 0.0,
+                          ),
+                    ),
+                    trailing: Icon(
+                      Icons.password,
+                      color: FlutterFlowTheme.of(context).secondaryText,
+                      size: 20.0,
+                    ),
+                    dense: false,
                   ),
-                  trailing: Icon(
-                    Icons.password,
-                    color: FlutterFlowTheme.of(context).secondaryText,
-                    size: 20.0,
-                  ),
-                  tileColor: FlutterFlowTheme.of(context).secondaryBackground,
-                  dense: false,
                 ),
               ),
             ),
@@ -474,31 +487,37 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   ? const Center(
                       child: CircularProgressIndicator(),
                     )
-                  : ListTile(
-                      onTap: () => logoutController.logout(),
-                      title: Text(
-                        'Keluar',
-                        style: FlutterFlowTheme.of(context).titleLarge.override(
-                              fontFamily: 'Outfit',
-                              letterSpacing: 0.0,
-                            ),
+                  : Card(
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.zero,
                       ),
-                      subtitle: Text(
-                        'keluar akun',
-                        style:
-                            FlutterFlowTheme.of(context).labelMedium.override(
-                                  fontFamily: 'Readex Pro',
-                                  letterSpacing: 0.0,
-                                ),
+                      elevation: 0,
+                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      child: ListTile(
+                        onTap: () => logoutController.logout(),
+                        title: Text(
+                          'Keluar',
+                          style:
+                              FlutterFlowTheme.of(context).titleLarge.override(
+                                    fontFamily: 'Outfit',
+                                    letterSpacing: 0.0,
+                                  ),
+                        ),
+                        subtitle: Text(
+                          'keluar akun',
+                          style:
+                              FlutterFlowTheme.of(context).labelMedium.override(
+                                    fontFamily: 'Readex Pro',
+                                    letterSpacing: 0.0,
+                                  ),
+                        ),
+                        trailing: Icon(
+                          Icons.exit_to_app,
+                          color: FlutterFlowTheme.of(context).secondaryText,
+                          size: 20.0,
+                        ),
+                        dense: false,
                       ),
-                      trailing: Icon(
-                        Icons.exit_to_app,
-                        color: FlutterFlowTheme.of(context).secondaryText,
-                        size: 20.0,
-                      ),
-                      tileColor:
-                          FlutterFlowTheme.of(context).secondaryBackground,
-                      dense: false,
                     )),
             ),
           ],

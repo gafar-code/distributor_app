@@ -409,10 +409,18 @@ class _DetailTaskAdminWidgetState extends State<DetailTaskAdminWidget> {
                                           alignment: const AlignmentDirectional(
                                               -1.0, 0.0),
                                           child: Text(
-                                            DateFormat('dd, MMM yyyy').format(
-                                                detailTaskController.data.value
-                                                        ?.data.data.updatedAt ??
-                                                    DateTime.now()),
+                                            detailTaskController.data.value
+                                                        ?.data.data.status ==
+                                                    'PENDING'
+                                                ? '-'
+                                                : DateFormat('dd, MMM yyyy')
+                                                    .format(detailTaskController
+                                                            .data
+                                                            .value
+                                                            ?.data
+                                                            .data
+                                                            .updatedAt ??
+                                                        DateTime.now()),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
