@@ -559,9 +559,6 @@ class _DetailTaskAdminWidgetState extends State<DetailTaskAdminWidget> {
                                                   .bodyMedium
                                                   .override(
                                                     fontFamily: 'Readex Pro',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primary,
                                                     letterSpacing: 0.0,
                                                     decoration: TextDecoration
                                                         .underline,
@@ -609,7 +606,9 @@ class _DetailTaskAdminWidgetState extends State<DetailTaskAdminWidget> {
                                           alignment: const AlignmentDirectional(
                                               -1.0, 0.0),
                                           child: Text(
-                                            userData?.gender ?? '-',
+                                            userData?.gender == 'MALE'
+                                                ? 'Laki-laki'
+                                                : 'Perempuan',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -618,8 +617,6 @@ class _DetailTaskAdminWidgetState extends State<DetailTaskAdminWidget> {
                                                           context)
                                                       .primaryText,
                                                   letterSpacing: 0.0,
-                                                  decoration:
-                                                      TextDecoration.underline,
                                                 ),
                                           ),
                                         ),

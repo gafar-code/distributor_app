@@ -255,6 +255,7 @@ class _ImageDetailWidgetState extends State<ImageDetailWidget> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
+                                            // TODO : perbaiki posisi
                                             Expanded(
                                               flex: 1,
                                               child: Align(
@@ -267,7 +268,7 @@ class _ImageDetailWidgetState extends State<ImageDetailWidget> {
                                                           .fromSTEB(
                                                           0.0, 0.0, 12.0, 0.0),
                                                   child: Text(
-                                                    'Koordinat :',
+                                                    'Koordinat',
                                                     textAlign: TextAlign.end,
                                                     style: FlutterFlowTheme.of(
                                                             context)
@@ -282,7 +283,7 @@ class _ImageDetailWidgetState extends State<ImageDetailWidget> {
                                               ),
                                             ),
                                             Expanded(
-                                              flex: 3,
+                                              flex: 2,
                                               child: Text(
                                                 '${proofController.data[currentIndex].latitude}, ${proofController.data[currentIndex].longitude}',
                                                 style:
@@ -324,7 +325,7 @@ class _ImageDetailWidgetState extends State<ImageDetailWidget> {
                                                           .fromSTEB(
                                                           0.0, 0.0, 12.0, 0.0),
                                                   child: Text(
-                                                    'Alamat :',
+                                                    'Alamat',
                                                     textAlign: TextAlign.end,
                                                     style: FlutterFlowTheme.of(
                                                             context)
@@ -339,7 +340,7 @@ class _ImageDetailWidgetState extends State<ImageDetailWidget> {
                                               ),
                                             ),
                                             Expanded(
-                                              flex: 3,
+                                              flex: 2,
                                               child: Text(
                                                 proofController
                                                     .data[currentIndex].address,

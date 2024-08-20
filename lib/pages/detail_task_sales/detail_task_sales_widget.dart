@@ -488,9 +488,6 @@ class _DetailTaskSalesWidgetState extends State<DetailTaskSalesWidget> {
                                             .bodyMedium
                                             .override(
                                               fontFamily: 'Readex Pro',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
                                               letterSpacing: 0.0,
                                               decoration:
                                                   TextDecoration.underline,
@@ -536,7 +533,9 @@ class _DetailTaskSalesWidgetState extends State<DetailTaskSalesWidget> {
                                     alignment:
                                         const AlignmentDirectional(-1.0, 0.0),
                                     child: Text(
-                                      userData?.gender ?? '-',
+                                      userData?.gender == 'MALE'
+                                          ? 'Laki-laki'
+                                          : 'Perempuan',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
@@ -544,8 +543,6 @@ class _DetailTaskSalesWidgetState extends State<DetailTaskSalesWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
                                             letterSpacing: 0.0,
-                                            decoration:
-                                                TextDecoration.underline,
                                           ),
                                     ),
                                   ),

@@ -65,7 +65,6 @@ class _EditTaskWidgetState extends State<EditTaskWidget> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        resizeToAvoidBottomInset: false,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primary,
@@ -96,8 +95,7 @@ class _EditTaskWidgetState extends State<EditTaskWidget> {
           centerTitle: false,
           elevation: 2.0,
         ),
-        body: Column(
-          mainAxisSize: MainAxisSize.max,
+        body: ListView(
           children: [
             Padding(
               padding:
