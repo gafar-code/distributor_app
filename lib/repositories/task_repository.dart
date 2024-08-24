@@ -10,7 +10,9 @@ import 'package:distributor_app/utils/prefs.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
+import '../flutter_flow/nav/nav.dart';
 import '../utils/either.dart';
+import '../utils/helper.dart';
 
 final class TaskRepository {
   final prefs = Get.find<PrefsService>().prefs;
@@ -33,6 +35,13 @@ final class TaskRepository {
       if (res.statusCode == 200) {
         return Either.success(taskListModelFromJson(res.body));
       } else {
+        if (errorModelFromJson(res.body).code == 401) {
+          clearControllers();
+          await prefs.clear();
+          navigatorKey.currentContext
+              ?.goNamed('LoginPage', extra: {'clearStack': true});
+          return Either.error(Failure('token invalid, silakan login ulang'));
+        }
         return Either.error(Failure(errorModelFromJson(res.body).message));
       }
     } catch (e) {
@@ -56,6 +65,13 @@ final class TaskRepository {
       if (res.statusCode == 200) {
         return Either.success(taskModelFromJson(res.body));
       } else {
+        if (errorModelFromJson(res.body).code == 401) {
+          clearControllers();
+          await prefs.clear();
+          navigatorKey.currentContext
+              ?.goNamed('LoginPage', extra: {'clearStack': true});
+          return Either.error(Failure('token invalid, silakan login ulang'));
+        }
         return Either.error(Failure(errorModelFromJson(res.body).message));
       }
     } catch (e) {
@@ -88,6 +104,13 @@ final class TaskRepository {
       if (res.statusCode == 200) {
         return Either.success(generalModelFromJson(res.body));
       } else {
+        if (errorModelFromJson(res.body).code == 401) {
+          clearControllers();
+          await prefs.clear();
+          navigatorKey.currentContext
+              ?.goNamed('LoginPage', extra: {'clearStack': true});
+          return Either.error(Failure('token invalid, silakan login ulang'));
+        }
         return Either.error(Failure(errorModelFromJson(res.body).message));
       }
     } catch (e) {
@@ -123,6 +146,13 @@ final class TaskRepository {
       if (res.statusCode == 200) {
         return Either.success(generalModelFromJson(res.body));
       } else {
+        if (errorModelFromJson(res.body).code == 401) {
+          clearControllers();
+          await prefs.clear();
+          navigatorKey.currentContext
+              ?.goNamed('LoginPage', extra: {'clearStack': true});
+          return Either.error(Failure('token invalid, silakan login ulang'));
+        }
         return Either.error(Failure(errorModelFromJson(res.body).message));
       }
     } catch (e) {
@@ -146,6 +176,13 @@ final class TaskRepository {
       if (res.statusCode == 200) {
         return Either.success(generalModelFromJson(res.body));
       } else {
+        if (errorModelFromJson(res.body).code == 401) {
+          clearControllers();
+          await prefs.clear();
+          navigatorKey.currentContext
+              ?.goNamed('LoginPage', extra: {'clearStack': true});
+          return Either.error(Failure('token invalid, silakan login ulang'));
+        }
         return Either.error(Failure(errorModelFromJson(res.body).message));
       }
     } catch (e) {

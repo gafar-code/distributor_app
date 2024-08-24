@@ -80,6 +80,13 @@ final class UserRepository {
       if (res.statusCode == 200) {
         return Either.success(generalModelFromJson(res.body));
       } else {
+        if (errorModelFromJson(res.body).code == 401) {
+          clearControllers();
+          await prefs.clear();
+          navigatorKey.currentContext
+              ?.goNamed('LoginPage', extra: {'clearStack': true});
+          return Either.error(Failure('token invalid, silakan login ulang'));
+        }
         return Either.error(Failure(errorModelFromJson(res.body).message));
       }
     } catch (e) {
