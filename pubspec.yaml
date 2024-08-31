@@ -80,6 +80,7 @@ dependencies:
   pull_to_refresh: ^2.0.0
   firebase_messaging: ^14.9.2
   flutter_local_notifications: ^17.2.2
+  calendar_date_picker2: ^1.1.5
 
 dependency_overrides:
   http: 1.2.1

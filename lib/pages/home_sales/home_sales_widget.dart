@@ -3,7 +3,6 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../controllers/home_controller.dart';
-import '../../controllers/logout_controller.dart';
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../models/task_model.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -21,8 +20,11 @@ class HomeSalesWidget extends StatefulWidget {
 
 class _HomeSalesWidgetState extends State<HomeSalesWidget> {
   final controller = Get.put(HomeController());
-  final logoutController = Get.put(LogoutController());
   final refreshController = RefreshController();
+  final dateRangeC = TextEditingController();
+  final scheduleAtC = TextEditingController();
+  DateTimeRange? selectedDateRange;
+  DateTime? selectedScheduleAt;
   late HomeSalesModel _model;
 
   @override
@@ -92,9 +94,10 @@ class _HomeSalesWidgetState extends State<HomeSalesWidget> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            taskSummaryWidget(),
             Padding(
               padding:
-                  const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                  const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -117,19 +120,19 @@ class _HomeSalesWidgetState extends State<HomeSalesWidget> {
                       ),
                     ),
                   ),
-                  Obx(() => Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 0.0, 12.0, 0.0),
-                        child: Text(
-                          'selesai ${controller.completedTaskCount}/${controller.totalPendingTaskCount}',
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Readex Pro',
-                                    fontSize: 18.0,
-                                    letterSpacing: 0.0,
-                                  ),
-                        ),
-                      )),
+                  // Obx(() => Padding(
+                  //       padding: const EdgeInsetsDirectional.fromSTEB(
+                  //           0.0, 0.0, 12.0, 0.0),
+                  //       child: Text(
+                  //         'selesai ${controller.completedTaskCount}/${controller.totalPendingTaskCount}',
+                  //         style:
+                  //             FlutterFlowTheme.of(context).bodyMedium.override(
+                  //                   fontFamily: 'Readex Pro',
+                  //                   fontSize: 18.0,
+                  //                   letterSpacing: 0.0,
+                  //                 ),
+                  //       ),
+                  //     )),
                 ],
               ),
             ),
@@ -212,6 +215,90 @@ class _HomeSalesWidgetState extends State<HomeSalesWidget> {
           ],
         ),
       ),
+    );
+  }
+
+  Padding taskSummaryWidget() {
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(12.0, 24.0, 12.0, 0.0),
+      child: Obx(() => Card(
+            margin: EdgeInsets.zero,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
+            elevation: 0,
+            color: FlutterFlowTheme.of(context).secondaryBackground,
+            child: ListTile(
+              contentPadding: const EdgeInsets.all(12),
+              title: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Total Sukses',
+                        style: FlutterFlowTheme.of(context).titleLarge.override(
+                              fontFamily: 'Outfit',
+                              letterSpacing: 0.0,
+                            ),
+                      ),
+                      Text(
+                        '${controller.completedTaskCount}',
+                        style: FlutterFlowTheme.of(context).titleLarge.override(
+                              fontFamily: 'Outfit',
+                              letterSpacing: 0.0,
+                            ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Total Pending',
+                        style: FlutterFlowTheme.of(context).titleLarge.override(
+                              fontFamily: 'Outfit',
+                              letterSpacing: 0.0,
+                            ),
+                      ),
+                      Text(
+                        '${controller.totalPendingTaskCount}',
+                        style: FlutterFlowTheme.of(context).titleLarge.override(
+                              fontFamily: 'Outfit',
+                              letterSpacing: 0.0,
+                            ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Total Dijadwalkan',
+                        style: FlutterFlowTheme.of(context).titleLarge.override(
+                              fontFamily: 'Outfit',
+                              letterSpacing: 0.0,
+                            ),
+                      ),
+                      Text(
+                        '${controller.scheduledTaskCount}',
+                        style: FlutterFlowTheme.of(context).titleLarge.override(
+                              fontFamily: 'Outfit',
+                              letterSpacing: 0.0,
+                            ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          )),
     );
   }
 }

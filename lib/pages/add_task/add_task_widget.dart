@@ -1,3 +1,4 @@
+import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:distributor_app/controllers/add_task_controller.dart';
 import 'package:distributor_app/controllers/sales_controller.dart';
 import 'package:distributor_app/utils/helper.dart';
@@ -23,6 +24,8 @@ class AddTaskWidget extends StatefulWidget {
 class _AddTaskWidgetState extends State<AddTaskWidget> {
   final salesController = Get.put(SalesContoller());
   final addTaskController = Get.put(AddTaskController());
+  final scheduledDateC = TextEditingController();
+  DateTime? selectedScheduledDate;
   late AddTaskModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -93,8 +96,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
         ),
         body: Form(
           key: formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
+          child: ListView(
             children: [
               Padding(
                 padding:
@@ -162,6 +164,73 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                     obscureText: false,
                     decoration: InputDecoration(
                       labelText: 'Deskripsi',
+                      labelStyle:
+                          FlutterFlowTheme.of(context).labelMedium.override(
+                                fontFamily: 'Readex Pro',
+                                letterSpacing: 0.0,
+                              ),
+                      hintStyle:
+                          FlutterFlowTheme.of(context).labelMedium.override(
+                                fontFamily: 'Readex Pro',
+                                letterSpacing: 0.0,
+                              ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).alternate,
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).primary,
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).error,
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).error,
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                          fontFamily: 'Readex Pro',
+                          letterSpacing: 0.0,
+                        ),
+                    validator: (val) => val!.isEmpty ? "Wajib diisi" : null),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(8.0, 12.0, 8.0, 0.0),
+                child: TextFormField(
+                    controller: scheduledDateC,
+                    onTap: () async {
+                      final date = await showCustomDatePicker(
+                          type: CalendarDatePicker2Type.single);
+                      if (date != null) {
+                        setState(() {
+                          selectedScheduledDate = date.first;
+                          scheduledDateC.text = DateFormat('dd MMMM yyyy')
+                              .format(selectedScheduledDate!);
+                        });
+                      }
+                    },
+                    readOnly: true,
+                    showCursor: false,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      suffixIcon: const Icon(Icons.calendar_month_rounded),
+                      labelText: 'Tanggal Pelaksanaan Tugas',
                       labelStyle:
                           FlutterFlowTheme.of(context).labelMedium.override(
                                 fontFamily: 'Readex Pro',
@@ -293,7 +362,9 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                             if (formKey.currentState!.validate()) {
                               if (_model.dropDownValue != null) {
                                 addTaskController.addTask(context,
-                                    int.parse(_model.dropDownValue.toString()));
+                                    salesId: int.parse(
+                                        _model.dropDownValue.toString()),
+                                    scheduleAt: selectedScheduledDate!);
                               } else {
                                 showCustomSnackbar(
                                     'Pilih sales terlebih dahulu');

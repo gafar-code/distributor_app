@@ -46,15 +46,17 @@ class TaskListModel {
 class TaskListDatum {
   final int totalSuccess;
   final int totalPending;
+  final int totalScheduled;
   final List<Task> tasks;
 
-  TaskListDatum({
-    required this.totalSuccess,
-    required this.totalPending,
-    required this.tasks,
-  });
+  TaskListDatum(
+      {required this.totalSuccess,
+      required this.totalPending,
+      required this.tasks,
+      required this.totalScheduled});
 
   factory TaskListDatum.fromJson(Map<String, dynamic> json) => TaskListDatum(
+        totalScheduled: json["total_scheduled"],
         totalSuccess: json["total_success"],
         totalPending: json["total_pending"],
         tasks: List<Task>.from(json["tasks"].map((x) => Task.fromJson(x))),
@@ -70,6 +72,7 @@ class Task {
   final String salesName;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final DateTime? scheduledAt;
 
   Task({
     required this.id,
@@ -79,6 +82,7 @@ class Task {
     required this.salesId,
     required this.salesName,
     required this.createdAt,
+    required this.scheduledAt,
     required this.updatedAt,
   });
 
@@ -91,6 +95,9 @@ class Task {
         salesName: json["sales_name"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
+        scheduledAt: json['scheduled_at'] == null || json['scheduled_at'] == ''
+            ? null
+            : DateTime.parse(json["scheduled_at"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -102,5 +109,7 @@ class Task {
         "sales_name": salesName,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
+        if (scheduledAt != null || scheduledAt.toString() != '')
+          "scheduled_at": scheduledAt!.toIso8601String(),
       };
 }

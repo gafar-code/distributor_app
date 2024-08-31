@@ -15,6 +15,7 @@ final class EditTaskController extends GetxController {
       {int? salesId,
       String? status,
       String? salesName,
+      DateTime? scheduleAt,
       required int taskId}) async {
     try {
       isLoading.value = true;
@@ -24,6 +25,7 @@ final class EditTaskController extends GetxController {
               title: titleC.text,
               description: descriptionC.text,
               status: status,
+              scheduleAt: scheduleAt,
               salesName: salesName,
               salesId: salesId));
       result.when(error: (e) async {

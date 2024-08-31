@@ -11,13 +11,15 @@ final class AddTaskController extends GetxController {
   final descriptionC = TextEditingController();
   final repo = TaskRepository();
 
-  void addTask(BuildContext context, int salesId) async {
+  void addTask(BuildContext context,
+      {required int salesId, required DateTime scheduleAt}) async {
     try {
       isLoading.value = true;
       final result = await repo.addTask(
           params: TaskParams(
               title: titleC.text,
               description: descriptionC.text,
+              scheduleAt: scheduleAt,
               salesId: salesId));
       result.when(error: (e) async {
         showCustomSnackbar(e.message);

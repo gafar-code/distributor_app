@@ -1,16 +1,15 @@
-import 'dart:convert';
 import 'dart:developer';
 
-import 'package:distributor_app/app_constants.dart';
+import 'package:distributor_app/flutter_flow/flutter_flow_util.dart';
 import 'package:distributor_app/models/error_model.dart';
 import 'package:distributor_app/models/general_model.dart';
 import 'package:distributor_app/models/task_model.dart';
 import 'package:distributor_app/utils/failure.dart';
 import 'package:distributor_app/utils/prefs.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-import '../flutter_flow/nav/nav.dart';
 import '../utils/either.dart';
 import '../utils/helper.dart';
 
@@ -18,9 +17,23 @@ final class TaskRepository {
   final prefs = Get.find<PrefsService>().prefs;
 
   Future<Either<Failure, TaskListModel>> getTasks(
-      {required int paginationId}) async {
+      {required int paginationId, TaskFilterParams? filterParams}) async {
+    final queryParameters = {
+      'pagination_id': paginationId.toString(),
+      if (filterParams?.dateRange != null)
+        'start_date':
+            '${DateFormat('yyyy-MM-dd').format(filterParams!.dateRange!.start)}T',
+      if (filterParams?.dateRange != null)
+        'end_date':
+            '${DateFormat('yyyy-MM-dd').format(filterParams!.dateRange!.end)}T',
+      if (filterParams?.scheduleAt != null)
+        'scheduled_at':
+            '${DateFormat('yyyy-MM-dd').format(filterParams!.scheduleAt!)}T',
+      if (filterParams?.salesId != null)
+        'sales_id': filterParams!.salesId.toString()
+    };
     final endpoint = Uri.parse('${AppConstants.apiBaseUrl}/task')
-        .replace(queryParameters: {'pagination_id': paginationId.toString()});
+        .replace(queryParameters: queryParameters);
     final token = prefs.getString('token');
     try {
       final res = await http.get(endpoint, headers: {
@@ -93,6 +106,8 @@ final class TaskRepository {
                 'title': params.title,
                 'body': params.description,
                 'sales_id': params.salesId,
+                'scheduled_at':
+                    '${DateFormat('yyyy-MM-dd').format(params.scheduleAt!)}T'
               }))
           .timeout(
         const Duration(seconds: 10),
@@ -134,7 +149,10 @@ final class TaskRepository {
                 'body': params.description,
                 'sales_id': params.salesId,
                 'status': params.status,
-                'sales_name': params.salesName
+                'sales_name': params.salesName,
+                if (params.scheduleAt != null)
+                  'scheduled_at':
+                      '${DateFormat('yyyy-MM-dd').format(params.scheduleAt!)}T'
               }))
           .timeout(
         const Duration(seconds: 10),
@@ -191,6 +209,14 @@ final class TaskRepository {
   }
 }
 
+final class TaskFilterParams {
+  final DateTimeRange? dateRange;
+  final DateTime? scheduleAt;
+  final int? salesId;
+
+  TaskFilterParams({this.dateRange, this.scheduleAt, this.salesId});
+}
+
 final class TaskParams {
   final int? taskId;
   final int? salesId;
@@ -198,6 +224,7 @@ final class TaskParams {
   final String? title;
   final String? salesName;
   final String? status;
+  final DateTime? scheduleAt;
 
   TaskParams(
       {this.salesId,
@@ -205,5 +232,6 @@ final class TaskParams {
       this.title,
       this.salesName,
       this.taskId,
+      this.scheduleAt,
       this.status});
 }

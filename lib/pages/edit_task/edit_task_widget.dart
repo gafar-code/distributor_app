@@ -1,8 +1,10 @@
+import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:distributor_app/controllers/edit_task_controller.dart';
 import 'package:distributor_app/controllers/sales_controller.dart';
 import 'package:get/get.dart';
 
 import '../../models/task_model.dart';
+import '../../utils/helper.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -21,11 +23,11 @@ class EditTaskWidget extends StatefulWidget {
   State<EditTaskWidget> createState() => _EditTaskWidgetState();
 }
 
-// TODO : SELESAIKAN INI SUBUH
-
 class _EditTaskWidgetState extends State<EditTaskWidget> {
   final editTaskController = Get.put(EditTaskController());
   final salesController = Get.put(SalesContoller());
+  final scheduledDateC = TextEditingController();
+  DateTime? selectedScheduledDate;
   late EditTaskModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -43,6 +45,10 @@ class _EditTaskWidgetState extends State<EditTaskWidget> {
   void initData() {
     editTaskController.titleC.text = widget.data?.title ?? '';
     editTaskController.descriptionC.text = widget.data?.body ?? '';
+    if (widget.data?.scheduledAt != null) {
+      scheduledDateC.text =
+          DateFormat('dd MMMM yyyy').format(widget.data!.scheduledAt!);
+    }
     _model.dropDownValue1 = widget.data?.status;
     _model.dropDownValueController1 = FormFieldController<String>(
       widget.data?.status,
@@ -206,6 +212,73 @@ class _EditTaskWidgetState extends State<EditTaskWidget> {
                 validator: _model.textController2Validator.asValidator(context),
               ),
             ),
+            Padding(
+              padding:
+                  const EdgeInsetsDirectional.fromSTEB(8.0, 12.0, 8.0, 0.0),
+              child: TextFormField(
+                  controller: scheduledDateC,
+                  onTap: () async {
+                    final date = await showCustomDatePicker(
+                        type: CalendarDatePicker2Type.single);
+                    if (date != null) {
+                      setState(() {
+                        selectedScheduledDate = date.first;
+                        scheduledDateC.text = DateFormat('dd MMMM yyyy')
+                            .format(selectedScheduledDate!);
+                      });
+                    }
+                  },
+                  readOnly: true,
+                  showCursor: false,
+                  obscureText: false,
+                  decoration: InputDecoration(
+                    suffixIcon: const Icon(Icons.calendar_month_rounded),
+                    labelText: 'Tanggal Pelaksanaan Tugas',
+                    labelStyle:
+                        FlutterFlowTheme.of(context).labelMedium.override(
+                              fontFamily: 'Readex Pro',
+                              letterSpacing: 0.0,
+                            ),
+                    hintStyle:
+                        FlutterFlowTheme.of(context).labelMedium.override(
+                              fontFamily: 'Readex Pro',
+                              letterSpacing: 0.0,
+                            ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: FlutterFlowTheme.of(context).alternate,
+                        width: 2.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: FlutterFlowTheme.of(context).primary,
+                        width: 2.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: FlutterFlowTheme.of(context).error,
+                        width: 2.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: FlutterFlowTheme.of(context).error,
+                        width: 2.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                        fontFamily: 'Readex Pro',
+                        letterSpacing: 0.0,
+                      ),
+                  validator: (val) => val!.isEmpty ? "Wajib diisi" : null),
+            ),
             Align(
               alignment: const AlignmentDirectional(0.0, 0.0),
               child: Padding(
@@ -350,6 +423,7 @@ class _EditTaskWidgetState extends State<EditTaskWidget> {
                               taskId: widget.data!.id,
                               salesName: _model.dropDownValue2,
                               status: _model.dropDownValue1,
+                              scheduleAt: selectedScheduledDate,
                               salesId: salesController.data
                                   .where((e) => e.name == _model.dropDownValue2)
                                   .first

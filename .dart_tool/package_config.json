@@ -50,6 +50,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "calendar_date_picker2",
+      "rootUri": "file:///Users/fauzirramadan/.pub-cache/hosted/pub.dev/calendar_date_picker2-1.1.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
       "name": "carousel_slider",
       "rootUri": "file:///Users/fauzirramadan/.pub-cache/hosted/pub.dev/carousel_slider-4.2.1",
       "packageUri": "lib/",
@@ -878,7 +884,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2024-08-13T22:09:38.809803Z",
+  "generated": "2024-08-26T23:54:33.557866Z",
   "generator": "pub",
   "generatorVersion": "3.4.3",
   "flutterRoot": "file:///Users/fauzirramadan/Development/flutter",
