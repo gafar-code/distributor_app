@@ -1,12 +1,8 @@
-import 'dart:developer';
-
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:distributor_app/controllers/home_controller.dart';
-import 'package:distributor_app/models/task_model.dart';
 import 'package:distributor_app/repositories/task_repository.dart';
 import 'package:distributor_app/utils/helper.dart';
 import 'package:get/get.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../controllers/sales_controller.dart';
 import '../../flutter_flow/flutter_flow_drop_down.dart';
@@ -29,18 +25,12 @@ class HomeAdminWidget extends StatefulWidget {
 class _HomeAdminWidgetState extends State<HomeAdminWidget> {
   final salesController = Get.put(SalesContoller());
   final controller = Get.put(HomeController());
-  final refreshController = RefreshController();
   final dateRangeC = TextEditingController();
   final scheduleAtC = TextEditingController();
   DateTimeRange? selectedDateRange;
   DateTime? selectedScheduleAt;
   int? selectedSalesId;
   late HomeAdminModel _model;
-
-  void onRefresh() {
-    controller.refreshTasks();
-    refreshController.refreshCompleted();
-  }
 
   @override
   void initState() {
@@ -103,7 +93,10 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
                   size: 24.0,
                 ),
                 onPressed: () async {
-                  context.pushNamed('Profile');
+                  context.pushNamed('Profile').then((_) {
+                    controller.loadInitialTasks();
+                    clearFilters();
+                  });
                 },
               ),
             ),
@@ -139,7 +132,7 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
                   child: FFButtonWidget(
                     onPressed: () async {
                       context.pushNamed('AddTask').then((_) {
-                        controller.refreshTasks();
+                        controller.loadInitialTasks();
                         clearFilters();
                       });
                     },
@@ -194,79 +187,92 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
           const SizedBox(
             height: 10,
           ),
-          Expanded(
-            child: SmartRefresher(
-              controller: refreshController,
-              onRefresh: onRefresh,
-              child: PagedListView<int, Task>(
-                  pagingController: controller.pagingController,
-                  builderDelegate: PagedChildBuilderDelegate(
-                    itemBuilder: (_, data, index) {
-                      return Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            12.0, 12.0, 12.0, 0.0),
-                        child: Theme(
-                          data: ThemeData(
-                            splashColor: Colors.transparent,
-                            checkboxTheme: const CheckboxThemeData(
-                              visualDensity: VisualDensity.compact,
-                              materialTapTargetSize:
-                                  MaterialTapTargetSize.shrinkWrap,
-                            ),
-                            unselectedWidgetColor:
-                                FlutterFlowTheme.of(context).secondaryText,
-                          ),
-                          child: Card(
-                            shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.zero),
-                            margin: EdgeInsets.zero,
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            child: CheckboxListTile(
-                              value: data.status == 'SUCCESS',
-                              onChanged: (newValue) async {
-                                await context.pushNamed('DetailTaskAdmin',
-                                    pathParameters: {
-                                      'id': data.id.toString()
-                                    }).then((_) {
-                                  controller.refreshTasks();
-                                });
-                              },
-                              title: Text(
-                                data.title,
-                                style: FlutterFlowTheme.of(context)
-                                    .titleLarge
-                                    .override(
-                                      fontFamily: 'Outfit',
-                                      letterSpacing: 0.0,
-                                    ),
-                              ),
-                              subtitle: Text(
-                                data.body,
-                                style: FlutterFlowTheme.of(context)
-                                    .labelMedium
-                                    .override(
-                                      fontFamily: 'Readex Pro',
-                                      letterSpacing: 0.0,
-                                    ),
-                              ),
-                              activeColor: FlutterFlowTheme.of(context).primary,
-                              checkColor: FlutterFlowTheme.of(context).info,
-                              dense: false,
-                              controlAffinity: ListTileControlAffinity.trailing,
-                            ),
-                          ),
-                        ),
-                      );
+          Obx(() => controller.isLoading.isTrue
+              ? const Center(
+                  child: Padding(
+                  padding: EdgeInsets.only(top: 24),
+                  child: CircularProgressIndicator(),
+                ))
+              : Expanded(
+                  child: SmartRefresher(
+                    controller: controller.refreshController,
+                    onRefresh: () {
+                      controller
+                          .loadInitialTasks(); // Trigger a refresh of tasks without filter
                     },
-                    noItemsFoundIndicatorBuilder: (_) {
-                      return const Center(
-                        child: Text('NO DATA '),
-                      );
+                    onLoading: () {
+                      controller
+                          .loadMoreTasks(); // Load more tasks with the current filter
                     },
-                  )),
-            ),
-          ),
+                    enablePullUp: true, // Enable pull-up to load more
+                    child: ListView.builder(
+                      itemCount:
+                          controller.tasks.length, // Display all loaded tasks
+                      itemBuilder: (_, index) {
+                        final task = controller.tasks[index];
+                        return Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              12.0, 12.0, 12.0, 0.0),
+                          child: Theme(
+                            data: ThemeData(
+                              splashColor: Colors.transparent,
+                              checkboxTheme: const CheckboxThemeData(
+                                visualDensity: VisualDensity.compact,
+                                materialTapTargetSize:
+                                    MaterialTapTargetSize.shrinkWrap,
+                              ),
+                              unselectedWidgetColor:
+                                  FlutterFlowTheme.of(context).secondaryText,
+                            ),
+                            child: Card(
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.zero),
+                              margin: EdgeInsets.zero,
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              child: CheckboxListTile(
+                                value: task.status == 'SUCCESS',
+                                onChanged: (newValue) async {
+                                  await context.pushNamed('DetailTaskAdmin',
+                                      pathParameters: {
+                                        'id': task.id.toString(),
+                                      }).then((_) {
+                                    controller
+                                        .loadInitialTasks(); // Refresh after returning from detail page
+                                  });
+                                },
+                                title: Text(
+                                  task.title,
+                                  style: FlutterFlowTheme.of(context)
+                                      .titleLarge
+                                      .override(
+                                        fontFamily: 'Outfit',
+                                        letterSpacing: 0.0,
+                                      ),
+                                ),
+                                subtitle: Text(
+                                  task.body,
+                                  style: FlutterFlowTheme.of(context)
+                                      .labelMedium
+                                      .override(
+                                        fontFamily: 'Readex Pro',
+                                        letterSpacing: 0.0,
+                                      ),
+                                ),
+                                activeColor:
+                                    FlutterFlowTheme.of(context).primary,
+                                checkColor: FlutterFlowTheme.of(context).info,
+                                dense: false,
+                                controlAffinity:
+                                    ListTileControlAffinity.trailing,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ))
         ],
       ),
     );
@@ -302,8 +308,12 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
                         const Spacer(),
                         GestureDetector(
                           onTap: () {
-                            clearFilters();
-                            salesController.getSales();
+                            if (selectedDateRange != null ||
+                                selectedSalesId != null ||
+                                selectedScheduleAt != null) {
+                              clearFilters();
+                              salesController.getSales();
+                            }
                           },
                           child: const Icon(
                             Icons.filter_alt_off,
@@ -560,33 +570,21 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
                           height: 30,
                         ),
                         FFButtonWidget(
-                          onPressed: () async {
-                            // Close the filter dialog or pop the context
-                            context.pop();
-
-                            // Remove any existing listeners
-                            log("Removing old page request listener");
-                            controller.pagingController
-                                .removePageRequestListener(
-                                    controller.fetchPage);
-
-                            // TODO : handle duplicate data
-
-                            controller.pagingController
-                                .addPageRequestListener((pageKey) {
-                              log("Page request listener triggered with pageKey: $pageKey");
-
-                              controller.getTasks(
-                                pageKey,
-                                filterParams: TaskFilterParams(
+                          onPressed: () {
+                            if (selectedDateRange != null ||
+                                selectedSalesId != null ||
+                                selectedScheduleAt != null) {
+                              controller.applyFilter(
+                                TaskFilterParams(
                                   dateRange: selectedDateRange,
                                   salesId: selectedSalesId,
                                   scheduleAt: selectedScheduleAt,
                                 ),
                               );
-                            });
-
-                            controller.refreshTasks();
+                            } else {
+                              controller.loadWithRemovedFilters();
+                            }
+                            context.pop();
                           },
                           text: 'Simpan',
                           options: FFButtonOptions(

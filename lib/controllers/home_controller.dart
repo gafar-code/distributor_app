@@ -1,69 +1,122 @@
 import 'dart:developer';
-
 import 'package:distributor_app/models/task_model.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../repositories/task_repository.dart';
 import '../utils/helper.dart';
 
 final class HomeController extends GetxController {
-  RxBool isLoading = false.obs;
+  final isLoading = false.obs;
   final repo = TaskRepository();
-  final taskScrollController = ScrollController();
-  final pagingController = PagingController<int, Task>(firstPageKey: 0);
+  final refreshController = RefreshController(initialRefresh: false);
+
+  final tasks = <Task>[].obs;
   RxInt totalPendingTaskCount = 0.obs;
   RxInt completedTaskCount = 0.obs;
   RxInt scheduledTaskCount = 0.obs;
+  RxBool hasMoreData = true.obs;
+
+  int? lastTaskId; // For manual pagination
+  TaskFilterParams? currentFilterParams; // Store the current filter state
 
   @override
   void onInit() {
     super.onInit();
-    log("Controller initialized, adding initial page request listener");
-    pagingController.addPageRequestListener(fetchPage);
+    loadInitialTasks(); // Initial load without any filter
   }
 
-  void refreshTasks() {
-    log("Refreshing tasks, clearing previous data");
-    pagingController.refresh();
+  void loadWithRemovedFilters() async {
+    currentFilterParams = null; // Store the applied filter
+
+    loadInitialTasks();
   }
 
-  void fetchPage(int pageKey) {
-    getTasks(
-        pageKey); // This will call the existing getTasks method without filters
-  }
-
-  void getTasks(int paginationId, {TaskFilterParams? filterParams}) async {
+  void loadInitialTasks() async {
     try {
-      log("Fetching tasks with paginationId: $paginationId");
+      log("Loading initial tasks");
       isLoading.value = true;
+      lastTaskId = null; // Reset pagination
+      tasks.clear();
+      refreshController.resetNoData(); // Clear previous tasks
+
       final result = await repo.getTasks(
-          paginationId: paginationId, filterParams: filterParams);
-      result.when(error: (e) async {
-        showCustomSnackbar(e.message);
-      }, success: (s) async {
-        totalPendingTaskCount.value = s.data.totalPending;
-        completedTaskCount.value = s.data.totalSuccess;
-        scheduledTaskCount.value = s.data.totalScheduled;
-        final tasks = s.data.tasks;
-        final isLastPage = tasks.isEmpty;
-        if (isLastPage) {
-          pagingController.appendLastPage(tasks);
-        } else {
-          final nextPageKey = tasks.last.id;
-          pagingController.appendPage(tasks, nextPageKey);
-        }
-        isLoading.value = false;
-      });
+          paginationId: 0,
+          filterParams: currentFilterParams // Use stored filter params
+          );
+
+      result.when(
+        error: (e) async {
+          showCustomSnackbar(e.message);
+          refreshController.refreshFailed();
+        },
+        success: (s) async {
+          totalPendingTaskCount.value = s.data.totalPending;
+          completedTaskCount.value = s.data.totalSuccess;
+          scheduledTaskCount.value = s.data.totalScheduled;
+
+          final fetchedTasks = s.data.tasks;
+          tasks.addAll(fetchedTasks);
+
+          if (fetchedTasks.isEmpty) {
+            refreshController.loadNoData();
+          } else {
+            lastTaskId =
+                fetchedTasks.last.id; // Set last task ID for pagination
+            refreshController.refreshCompleted();
+          }
+        },
+      );
     } finally {
       isLoading.value = false;
     }
   }
 
+  void loadMoreTasks() async {
+    if (lastTaskId == null) {
+      refreshController.loadNoData();
+      return;
+    }
+
+    try {
+      log("Loading more tasks with lastTaskId: $lastTaskId and current filter");
+
+      final result = await repo.getTasks(
+          paginationId: lastTaskId!,
+          filterParams: currentFilterParams // Use stored filter params
+          );
+
+      result.when(
+        error: (e) async {
+          showCustomSnackbar(e.message);
+          refreshController.loadFailed();
+        },
+        success: (s) async {
+          final fetchedTasks = s.data.tasks;
+          if (fetchedTasks.isEmpty) {
+            refreshController.loadNoData();
+          } else {
+            tasks.addAll(fetchedTasks);
+            lastTaskId =
+                fetchedTasks.last.id; // Update last task ID for pagination
+            refreshController.loadComplete();
+          }
+        },
+      );
+    } finally {}
+  }
+
+  void applyFilter(TaskFilterParams filterParams) {
+    log("Applying new filter: $filterParams");
+
+    currentFilterParams = filterParams; // Store the applied filter
+
+    loadInitialTasks(); // Load tasks with the applied filter
+  }
+
   @override
   void onClose() {
-    taskScrollController.dispose();
+    refreshController.dispose(); // Dispose of the RefreshController
     super.onClose();
   }
 }

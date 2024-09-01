@@ -1,3 +1,4 @@
+import 'package:distributor_app/controllers/sales_controller.dart';
 import 'package:distributor_app/repositories/auth_repository.dart';
 import 'package:distributor_app/utils/prefs.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,7 @@ final class RegisterController extends GetxController {
         showCustomSnackbar(e.message);
       }, success: (s) async {
         showCustomSnackbar('Tambah Pengguna berhasil');
+        await Get.delete<SalesContoller>();
         clearFields();
       });
     } finally {

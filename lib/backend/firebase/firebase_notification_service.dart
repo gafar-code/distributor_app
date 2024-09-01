@@ -139,7 +139,7 @@ class NotificationService {
           '/detailTaskSales/$taskIdBg',
         )
             .then((_) {
-          Get.find<HomeController>().refreshTasks();
+          Get.find<HomeController>().loadInitialTasks();
         });
       } else {
         await navigatorKey.currentContext
@@ -147,7 +147,7 @@ class NotificationService {
           '/detailTaskSales/$taskId',
         )
             .then((_) {
-          Get.find<HomeController>().refreshTasks();
+          Get.find<HomeController>().loadInitialTasks();
         });
       }
     }
