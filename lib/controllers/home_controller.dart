@@ -15,6 +15,7 @@ final class HomeController extends GetxController {
   RxInt totalPendingTaskCount = 0.obs;
   RxInt completedTaskCount = 0.obs;
   RxInt scheduledTaskCount = 0.obs;
+  RxInt totalTask = 0.obs;
   RxBool hasMoreData = true.obs;
 
   int? lastTaskId; // For manual pagination
@@ -54,6 +55,9 @@ final class HomeController extends GetxController {
           totalPendingTaskCount.value = s.data.totalPending;
           completedTaskCount.value = s.data.totalSuccess;
           scheduledTaskCount.value = s.data.totalScheduled;
+          totalTask.value = totalPendingTaskCount.value +
+              completedTaskCount.value +
+              scheduledTaskCount.value;
 
           final fetchedTasks = s.data.tasks;
           tasks.addAll(fetchedTasks);

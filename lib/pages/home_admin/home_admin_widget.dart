@@ -106,8 +106,9 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          taskSummaryWidget(),
           Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -617,5 +618,118 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
             );
           });
         });
+  }
+
+  Padding taskSummaryWidget() {
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(12.0, 24.0, 12.0, 12),
+      child: Obx(() => Card(
+            margin: EdgeInsets.zero,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
+            elevation: 0,
+            color: FlutterFlowTheme.of(context).secondaryBackground,
+            child: ListTile(
+              contentPadding: const EdgeInsets.all(12),
+              title: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Total Tugas',
+                        style: FlutterFlowTheme.of(context).titleLarge.override(
+                            fontFamily: 'Outfit',
+                            letterSpacing: 0.0,
+                            fontSize: 18),
+                      ),
+                      Text(
+                        '${controller.totalTask}',
+                        style: FlutterFlowTheme.of(context).titleLarge.override(
+                              fontSize: 18,
+                              fontFamily: 'Outfit',
+                              letterSpacing: 0.0,
+                            ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Total Sukses',
+                        style: FlutterFlowTheme.of(context).titleLarge.override(
+                              fontSize: 18,
+                              fontFamily: 'Outfit',
+                              letterSpacing: 0.0,
+                            ),
+                      ),
+                      Text(
+                        '${controller.completedTaskCount}',
+                        style: FlutterFlowTheme.of(context).titleLarge.override(
+                              fontSize: 18,
+                              fontFamily: 'Outfit',
+                              letterSpacing: 0.0,
+                            ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Total Pending',
+                        style: FlutterFlowTheme.of(context).titleLarge.override(
+                              fontSize: 18,
+                              fontFamily: 'Outfit',
+                              letterSpacing: 0.0,
+                            ),
+                      ),
+                      Text(
+                        '${controller.totalPendingTaskCount}',
+                        style: FlutterFlowTheme.of(context).titleLarge.override(
+                              fontSize: 18,
+                              fontFamily: 'Outfit',
+                              letterSpacing: 0.0,
+                            ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Total Dijadwalkan',
+                        style: FlutterFlowTheme.of(context).titleLarge.override(
+                              fontSize: 18,
+                              fontFamily: 'Outfit',
+                              letterSpacing: 0.0,
+                            ),
+                      ),
+                      Text(
+                        '${controller.scheduledTaskCount}',
+                        style: FlutterFlowTheme.of(context).titleLarge.override(
+                              fontSize: 18,
+                              fontFamily: 'Outfit',
+                              letterSpacing: 0.0,
+                            ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          )),
+    );
   }
 }

@@ -251,7 +251,7 @@ class _HomeSalesWidgetState extends State<HomeSalesWidget> {
 
   Padding taskSummaryWidget() {
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(12.0, 24.0, 12.0, 0.0),
+      padding: const EdgeInsetsDirectional.fromSTEB(12.0, 24.0, 12.0, 12),
       child: Obx(() => Card(
             margin: EdgeInsets.zero,
             shape: const RoundedRectangleBorder(
@@ -267,8 +267,32 @@ class _HomeSalesWidgetState extends State<HomeSalesWidget> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
+                        'Total Tugas',
+                        style: FlutterFlowTheme.of(context).titleLarge.override(
+                            fontFamily: 'Outfit',
+                            letterSpacing: 0.0,
+                            fontSize: 18),
+                      ),
+                      Text(
+                        '${controller.totalTask}',
+                        style: FlutterFlowTheme.of(context).titleLarge.override(
+                              fontSize: 18,
+                              fontFamily: 'Outfit',
+                              letterSpacing: 0.0,
+                            ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
                         'Total Sukses',
                         style: FlutterFlowTheme.of(context).titleLarge.override(
+                              fontSize: 18,
                               fontFamily: 'Outfit',
                               letterSpacing: 0.0,
                             ),
@@ -276,6 +300,7 @@ class _HomeSalesWidgetState extends State<HomeSalesWidget> {
                       Text(
                         '${controller.completedTaskCount}',
                         style: FlutterFlowTheme.of(context).titleLarge.override(
+                              fontSize: 18,
                               fontFamily: 'Outfit',
                               letterSpacing: 0.0,
                             ),
@@ -283,7 +308,7 @@ class _HomeSalesWidgetState extends State<HomeSalesWidget> {
                     ],
                   ),
                   const SizedBox(
-                    height: 8,
+                    height: 5,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -291,6 +316,7 @@ class _HomeSalesWidgetState extends State<HomeSalesWidget> {
                       Text(
                         'Total Pending',
                         style: FlutterFlowTheme.of(context).titleLarge.override(
+                              fontSize: 18,
                               fontFamily: 'Outfit',
                               letterSpacing: 0.0,
                             ),
@@ -298,6 +324,7 @@ class _HomeSalesWidgetState extends State<HomeSalesWidget> {
                       Text(
                         '${controller.totalPendingTaskCount}',
                         style: FlutterFlowTheme.of(context).titleLarge.override(
+                              fontSize: 18,
                               fontFamily: 'Outfit',
                               letterSpacing: 0.0,
                             ),
@@ -305,7 +332,7 @@ class _HomeSalesWidgetState extends State<HomeSalesWidget> {
                     ],
                   ),
                   const SizedBox(
-                    height: 8,
+                    height: 5,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -313,6 +340,7 @@ class _HomeSalesWidgetState extends State<HomeSalesWidget> {
                       Text(
                         'Total Dijadwalkan',
                         style: FlutterFlowTheme.of(context).titleLarge.override(
+                              fontSize: 18,
                               fontFamily: 'Outfit',
                               letterSpacing: 0.0,
                             ),
@@ -320,6 +348,7 @@ class _HomeSalesWidgetState extends State<HomeSalesWidget> {
                       Text(
                         '${controller.scheduledTaskCount}',
                         style: FlutterFlowTheme.of(context).titleLarge.override(
+                              fontSize: 18,
                               fontFamily: 'Outfit',
                               letterSpacing: 0.0,
                             ),
