@@ -423,7 +423,8 @@ class _EditTaskWidgetState extends State<EditTaskWidget> {
                               taskId: widget.data!.id,
                               salesName: _model.dropDownValue2,
                               status: _model.dropDownValue1,
-                              scheduleAt: selectedScheduledDate,
+                              scheduleAt: selectedScheduledDate ??
+                                  widget.data!.scheduledAt,
                               salesId: salesController.data
                                   .where((e) => e.name == _model.dropDownValue2)
                                   .first
